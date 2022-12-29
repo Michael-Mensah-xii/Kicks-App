@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Trainers App</string>
+    <string name="user_name">Caroline</string>
+    <string name="greeting_morning">Good morning,</string>
+    <string name="text_add_icon">add icon</string>
+    <string name="confirm_button">Confirm Order</string>
+    <string name="ash_adidas_string">Ash Adidas</string>
+    <string name="red_adidas_string">Red Adidas</string>
+    <string name="pink_adidas_string">Pink Adidas</string>
+    <string name="yellow_adidas_string">Yellow Adidas</string>
+    <string name="temp_price">GHS 200.00</string>
+    <string name="price_tag">Total price:</string>
+</resources>
