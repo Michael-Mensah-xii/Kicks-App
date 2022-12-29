@@ -127,7 +127,7 @@ fun LoadingPage() {
     Column(
         modifier = Modifier
             .padding(horizontal = 16.dp)
-            .padding(top=740.dp),
+            .padding(top = 740.dp),
     )
     {
         OutlinedButton(
