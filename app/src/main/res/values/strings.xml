@@ -10,4 +10,17 @@
     <string name="yellow_adidas_string">Yellow Adidas</string>
     <string name="temp_price">GHS 200.00</string>
     <string name="price_tag">Total price:</string>
+    <string name="blue_adidas_string">Blue Adidas</string>
+    <string name="white_adidas_string">White Adidas</string>
+    <string name="price_yellow_adidas">GHS 200.00</string>
+    <string name="price_red_adidas">GHS 189.99</string>
+    <string name="price_white_adidas">GHS 300.00</string>
+    <string name="price_price_ash_adidas">GHS 200.00</string>
+    <string name="price_blue_adidas">GHS 250.00</string>
+    <string name="price_pink_adidas">GHS 200.00</string>
+    <string name="generic_review">Nice shoes looks perfect and fits well\nAmazing sneakers\nbest of all</string>
+    <string name="Reviews">Reviews:</string>
+    <string name="add_to_cart">Add to cart</string>
+    <string name="size_btn">Sizes:</string>
+    <string name="similar">Similar match:</string>
 </resources>

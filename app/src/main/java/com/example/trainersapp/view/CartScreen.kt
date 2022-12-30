@@ -28,6 +28,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.trainersapp.R
 import com.example.trainersapp.ui.theme.App_purple
+import com.example.trainersapp.ui.theme.App_purple_alpha
 import com.example.trainersapp.ui.theme.App_purple_fade
 import com.example.trainersapp.ui.theme.PoppinsTypography
 
@@ -205,9 +206,9 @@ val cartData = listOf(
 fun CartItemButton() {
     Box(
         modifier = Modifier
-            .height(43.dp)
+            .height(35.dp)
             .padding(8.dp)
-            .widthIn(20.dp)
+            .widthIn(15.dp)
             .background(App_purple_fade),
     ) {
         Row(
@@ -217,7 +218,7 @@ fun CartItemButton() {
             Box(
                 modifier = Modifier
                     .clip(RoundedCornerShape(2.dp))
-                    .background(App_purple)
+                    .background(App_purple_alpha)
                     .alpha(0.5f)
                     .padding(4.dp)
                     .clickable { },
@@ -241,7 +242,7 @@ fun CartItemButton() {
             Box(
                 modifier = Modifier
                     .clip(RoundedCornerShape(2.dp))
-                    .background(App_purple)
+                    .background(App_purple_alpha)
                     .alpha(0.5f)
                     .padding(4.dp)
                     .clickable { },
@@ -283,7 +284,7 @@ fun ConfirmOrderButton(navController: NavController) {
                 stringResource(R.string.confirm_button),
                 style = PoppinsTypography.button,
                 color = Color.Black,
-                fontSize = 14.sp,
+                fontSize = 18.sp,
             )
         }
     }
