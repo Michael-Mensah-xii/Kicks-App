@@ -22,6 +22,6 @@ Screenshots of app
 
 <img height="740" src="Screenshots/Screenshot_20221231_212701.png" width="360"/>   <img height="740" src="Screenshots/Screenshot_20221231_212722.png" width="360"/>
 
-# App Visual
 
+# App Visual
 
