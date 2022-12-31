@@ -412,6 +412,8 @@ fun SimilarMatchRow(navController: NavHostController) {
 }
 
 
+
+
 @Composable
 fun SimilarMatchLayout(
     destination: ShoeData,
@@ -422,7 +424,9 @@ fun SimilarMatchLayout(
         verticalArrangement = Arrangement.Center,
         modifier = Modifier
             .widthIn(112.dp)
-            .clickable {}
+            .clickable {
+               // navController.navigate("details/$index")
+            }
     ) {
         Image(
             painter = painterResource(destination.id),

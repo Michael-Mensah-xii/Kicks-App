@@ -72,6 +72,7 @@ fun TrainersApp(destinationViewModel: DestinationViewModel = viewModel()) {
             composable("onBoarding") {LoadingPage(navController)}
             composable("signUp") { SignUpScreen(navController) }
             composable("home") { HomeScreen(navController) }
+            composable("similar_items") { SimilarMatchRow(navController) }
             composable("details/{listId}") { backStackEntry ->
                 backStackEntry.arguments?.getString("listId")
                     ?.let { ShoeViewPage(it, navController, destinationViewModel) }
