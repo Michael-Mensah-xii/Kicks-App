@@ -20,5 +20,4 @@ Screenshots of app
 
 # App Visual
 
-https://user-images.githubusercontent.com/95852329/210156150-809f3d90-1abb-4428-aa77-33962b324179.mp4
 
