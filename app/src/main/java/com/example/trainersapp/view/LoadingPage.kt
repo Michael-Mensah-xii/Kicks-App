@@ -19,13 +19,15 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.example.trainersapp.R
 import com.example.trainersapp.ui.theme.App_grey
 import com.example.trainersapp.ui.theme.App_purple
 import com.example.trainersapp.ui.theme.PoppinsTypography
 
 @Composable
-fun LoadingPage() {
+fun LoadingPage(navController: NavHostController) {
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -140,7 +142,10 @@ fun LoadingPage() {
                     .fillMaxWidth(),
                 shape = RoundedCornerShape(32.dp),
                 border = BorderStroke(1.dp, App_purple),
-                onClick = { /*TODO*/ })
+                onClick = { navController.navigate("signUp") {
+                    popUpTo("signUp") { inclusive = true }
+                } }
+            )
             {
                 Text(
                     text = "Sign Up",
@@ -159,5 +164,6 @@ fun LoadingPage() {
 @Preview
 @Composable
 fun LoadingPagePreview() {
-    LoadingPage()
+    val navController = rememberNavController()
+    LoadingPage(navController)
 }

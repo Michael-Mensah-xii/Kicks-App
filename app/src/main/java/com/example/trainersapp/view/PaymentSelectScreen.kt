@@ -69,7 +69,9 @@ fun PaymentList(
     navController: NavController,
 ) {
     Column(modifier = Modifier.fillMaxSize()) {
+
         ChoosePayment(navController)
+
         Text(
             text = "Choose your payment method",
             modifier = Modifier

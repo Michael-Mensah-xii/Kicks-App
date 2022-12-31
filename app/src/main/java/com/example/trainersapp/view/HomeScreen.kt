@@ -24,7 +24,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.trainersapp.R
@@ -40,8 +39,7 @@ import com.example.trainersapp.ui.theme.RatingYellow
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun HomeScreen(
-    navController: NavController,
-) {
+    navController: NavHostController) {
     Box(modifier = Modifier)
     {
         Column(modifier = Modifier
@@ -51,7 +49,7 @@ fun HomeScreen(
 
 
         }
-        ShoeGrid(navController = rememberNavController())
+        ShoeGrid(navController)
 
     }
 
@@ -148,7 +146,7 @@ fun GridItemLayout(
             text = stringResource(destination.price),
             color = Color.Black,
             style = PoppinsTypography.body1,
-            fontSize = 7.sp,
+            fontSize = 8.sp,
         )
     }
 }
@@ -204,13 +202,13 @@ fun LogoItem(
         horizontalAlignment = Alignment.CenterHorizontally
 
     ) {
-        Box(
+        Column(
             modifier = Modifier
+                .clip(RoundedCornerShape(4.dp))
                 .clickable {
                     // Update the selectedIndex state when the LogoItem is clicked
                     onSelected(index)
                 }
-                .clip(RoundedCornerShape(8.dp))
                 .padding(horizontal = 16.dp)
                 .heightIn(40.dp)
         ) {
@@ -275,7 +273,6 @@ fun GridItemLayoutPreview() {
     )
     SimilarMatchLayout(destination, 0, navController)
 }
-
 
 
 @Preview(showBackground = true)

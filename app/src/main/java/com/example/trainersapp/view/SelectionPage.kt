@@ -422,9 +422,7 @@ fun SimilarMatchLayout(
         verticalArrangement = Arrangement.Center,
         modifier = Modifier
             .widthIn(112.dp)
-            .clickable {
-                navController.navigate("details/$index")
-            }
+            .clickable {}
     ) {
         Image(
             painter = painterResource(destination.id),

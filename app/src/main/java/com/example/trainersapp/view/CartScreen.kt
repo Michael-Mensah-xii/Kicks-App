@@ -265,7 +265,7 @@ fun CartItemButton() {
 @Composable
 fun ConfirmOrderButton(navController: NavController) {
     Column(modifier = Modifier
-        .padding(bottom = 60.dp)
+        .padding(bottom = 32.dp)
         .padding(horizontal = 16.dp)
     ) {
         Button(

@@ -16,11 +16,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.example.trainersapp.R
 import com.example.trainersapp.ui.theme.*
 
 @Composable
-fun SignUp() {
+fun SignUpScreen(navController: NavHostController) {
     Column(Modifier
         .fillMaxSize()
         .verticalScroll(rememberScrollState())
@@ -29,6 +31,22 @@ fun SignUp() {
         val textState1 = rememberSaveable { mutableStateOf("") }
         val textState2 = rememberSaveable { mutableStateOf("") }
         val textState3 = rememberSaveable { mutableStateOf("") }
+
+
+
+        Column() {
+            Text(text = "Skip", modifier = Modifier
+                .widthIn(40.dp)
+                .padding(4.dp)
+                .clip(RoundedCornerShape(8.dp))
+                .clickable {
+                    navController.navigate("home") {
+                        popUpTo("home") { inclusive = true }
+                    }
+                }
+            )
+        }
+
 
         Row(modifier = Modifier
             .fillMaxWidth()
@@ -163,14 +181,19 @@ fun SignUp() {
 
         Spacer(modifier = Modifier.heightIn(24.dp))
 
-        Text(
-            text = "Already have an account? Login",
-            modifier = Modifier.fillMaxWidth(),
-            style = PoppinsTypography.body1,
-            color = App_purple,
-            fontSize = 14.sp,
-            textAlign = TextAlign.Center,
-        )
+        Column {
+            Text(
+                text = "Already have an account? Login",
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clip(RoundedCornerShape(8.dp))
+                    .clickable { },
+                style = PoppinsTypography.body1,
+                color = App_purple,
+                fontSize = 14.sp,
+                textAlign = TextAlign.Center,
+            )
+        }
 
         Spacer(modifier = Modifier.heightIn(24.dp))
 
@@ -183,14 +206,19 @@ fun SignUp() {
                     .width(126.dp))
 
 
-            Text(
-                text = "Or Sign up with",
-                modifier = Modifier.widthIn(min = 102.dp),
-                style = PoppinsTypography.body1,
-                color = App_grey,
-                fontSize = 14.sp,
-                textAlign = TextAlign.Center,
-            )
+            Column {
+                Text(
+                    text = "Or Sign up with",
+                    modifier = Modifier
+                        .widthIn(min = 102.dp)
+                        .clip(RoundedCornerShape(8.dp))
+                        .clickable { },
+                    style = PoppinsTypography.body1,
+                    color = App_grey,
+                    fontSize = 14.sp,
+                    textAlign = TextAlign.Center,
+                )
+            }
 
             Divider(thickness = 0.5.dp, color = App_divider_colour,
                 modifier = Modifier
@@ -200,7 +228,8 @@ fun SignUp() {
 
         Spacer(modifier = Modifier.heightIn(24.dp))
 
-        Column()
+        Column(modifier = Modifier
+            .padding(bottom = 32.dp))
         {
             OutlinedButton(
                 modifier = Modifier
@@ -236,6 +265,7 @@ fun SignUp() {
 
 @Preview(showBackground = true)
 @Composable
-fun SignUpPreview() {
-    SignUp()
+fun SignUpScreenPreview() {
+    val navController = rememberNavController()
+    SignUpScreen(navController)
 }

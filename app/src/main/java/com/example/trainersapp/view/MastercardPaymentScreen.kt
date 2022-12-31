@@ -221,7 +221,7 @@ fun MastercardPaymentDetails(navController: NavController) {
         {
             Button(
                 modifier = Modifier
-                    .padding(bottom = 60.dp)
+                    .padding(bottom = 24.dp)
                     .heightIn(58.dp)
                     .fillMaxWidth(),
                 shape = RoundedCornerShape(32.dp),

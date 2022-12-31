@@ -6,14 +6,10 @@ import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
-import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
@@ -23,20 +19,15 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.trainersapp.model.DestinationViewModel
 import com.example.trainersapp.ui.theme.TrainersAppTheme
-import com.example.trainersapp.view.BottomNavigationBar
-import com.example.trainersapp.view.TopBar
+import com.example.trainersapp.view.*
 
 class MainActivity : ComponentActivity() {
+    @OptIn(ExperimentalFoundationApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            TrainersAppTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colors.background) {
-                    Greeting("Android")
-                }
-            }
+            TrainersApp()
+
         }
     }
 }
@@ -45,7 +36,7 @@ class MainActivity : ComponentActivity() {
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @ExperimentalFoundationApi
 @Composable
-fun LazyVerticalGridActivityScreen(destinationViewModel: DestinationViewModel = viewModel()) {
+fun TrainersApp(destinationViewModel: DestinationViewModel = viewModel()) {
     val navController = rememberNavController()
     var canPop by remember { mutableStateOf(false) }
 
@@ -78,15 +69,17 @@ fun LazyVerticalGridActivityScreen(destinationViewModel: DestinationViewModel = 
 
     ) {
         NavHost(navController = navController, startDestination = "onBoarding") {
-            composable("onBoarding") { }
-            composable("home") { }
+            composable("onBoarding") {LoadingPage(navController)}
+            composable("signUp") { SignUpScreen(navController) }
+            composable("home") { HomeScreen(navController) }
             composable("details/{listId}") { backStackEntry ->
                 backStackEntry.arguments?.getString("listId")
-                    ?.let { /*FoodItemCheck(it, navController, destinationViewModel)*/ }
+                    ?.let { ShoeViewPage(it, navController, destinationViewModel) }
             }
-            composable("cart") { }
-            composable("pay_select") { }
-            composable("visa_select") { }
+            composable("cart") { CartScreen(navController)}
+            composable("pay_select") { PaymentList(navController) }
+            composable("visa_select") {VisaPaymentScreen(navController)}
+            composable("mastercard_select") { MastercardPaymentScreen(navController)}
         }
     }
 }
@@ -102,7 +95,7 @@ fun BottomBarAnimation(
 
     // Control BottomBar
     when (navBackStackEntry?.destination?.route) {
-        "onBoarding" -> {
+        "onBoarding","signUp","cart","details/{listId}","mastercard_select","visa_select","pay_select" -> {
             // Hide BottomBar
             bottomBarState.value = false
             // Hide TopBar
@@ -115,6 +108,9 @@ fun BottomBarAnimation(
             topBarState.value = true
         }
     }
+
+
+
 }
 
 
