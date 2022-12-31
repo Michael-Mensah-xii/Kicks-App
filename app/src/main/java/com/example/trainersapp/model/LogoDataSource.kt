@@ -13,6 +13,3 @@ import com.example.trainersapp.R
     }
 }
 
-
-
-

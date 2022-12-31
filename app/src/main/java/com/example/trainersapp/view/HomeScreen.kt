@@ -12,7 +12,7 @@ import androidx.compose.material.Divider
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -154,17 +154,20 @@ fun GridItemLayout(
 }
 
 
+//logo row
 @Composable
 fun LogoRow(navController: NavHostController) {
     val destinations = LogoDataSource().loadData()
+    // Add a state variable to track the currently selected item
+    var selectedIndex by remember { mutableStateOf(-1) }
 
     Column(
         modifier = Modifier
             .heightIn(50.dp)
     ) {
-
         LazyRow(
             horizontalArrangement = Arrangement.SpaceBetween,
+            // Remove the content padding from the LazyRow
             contentPadding = PaddingValues(horizontal = 0.dp),
             verticalAlignment = Alignment.Top,
             modifier = Modifier
@@ -172,53 +175,64 @@ fun LogoRow(navController: NavHostController) {
                 .heightIn(50.dp)
         ) {
             itemsIndexed(destinations) { index, destination ->
-                Row(Modifier
-                    .padding(8.dp)
-                ) {
-                    LogoItem(destination,
-                        index,
-                        navController) // pass individual destination object
+                // Pass the selectedIndex and the onSelected callback to the LogoItem composable
+                LogoItem(destination, index, navController, selectedIndex) { newIndex ->
+                    selectedIndex = newIndex
                 }
             }
-
         }
 
-        Divider(thickness = 0.5.dp, color = App_divider_colour,
+        Divider(thickness = 0.8.dp, color = App_divider_colour,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 8.dp)
                 .padding(horizontal = 16.dp)
         )
     }
 }
 
-
-//logo row item
+//logo item
 @Composable
 fun LogoItem(
     destination: LogoData,
     index: Int,
     navController: NavHostController,
+    selectedIndex: Int,
+    onSelected: (Int) -> Unit,
 ) {
-    Box(
-        modifier = Modifier
-            //   .size(width = 60.dp, height = 50.dp)
-            .clickable {}
-            .clip(RoundedCornerShape(8.dp))
-            .padding(horizontal = 16.dp)
-            .heightIn(40.dp)
+    Column(
+        modifier = Modifier.widthIn(42.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+
     ) {
-        Box {
-
-            Image(
-                painter = painterResource(id = destination.logo),
-                contentDescription = "brand logo",
-                //   modifier = Modifier.size(width = 56.dp, height = 28.dp),
-                contentScale = ContentScale.Crop,
-
+        Box(
+            modifier = Modifier
+                .clickable {
+                    // Update the selectedIndex state when the LogoItem is clicked
+                    onSelected(index)
+                }
+                .clip(RoundedCornerShape(8.dp))
+                .padding(horizontal = 16.dp)
+                .heightIn(40.dp)
+        ) {
+            Box {
+                Image(
+                    painter = painterResource
+                        (id = destination.logo),
+                    contentDescription = "brand logo",
+                    //   modifier = Modifier.size(width = 56.dp, height = 28.dp),
+                    contentScale = ContentScale.Crop,
                 )
+            }
         }
 
+        Spacer(modifier = Modifier.heightIn(10.dp))
+
+        // Use the selectedIndex to determine the color of the divider
+        val dividerColor = if (index == selectedIndex) Color.Black else App_divider_colour
+        Divider(thickness = 0.6.dp, color = dividerColor,
+            modifier = Modifier
+                .widthIn(40.dp)
+        )
     }
 }
 
@@ -263,6 +277,7 @@ fun GridItemLayoutPreview() {
 }
 
 
+
 @Preview(showBackground = true)
 @Composable
 fun PreviewLogoItem() {
@@ -270,8 +285,13 @@ fun PreviewLogoItem() {
     val destination = LogoData(
         logo = R.drawable.vans_logo,
     )
-    LogoItem(destination, 0, navController)
+    // Add the selectedIndex and onSelected arguments to the LogoItem composable
+    var selectedIndex by remember { mutableStateOf(0) }
+    LogoItem(destination, 0, navController, selectedIndex) { newIndex ->
+        selectedIndex = newIndex
+    }
 }
+
 
 @Preview(showBackground = true)
 @Composable
