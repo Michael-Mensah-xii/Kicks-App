@@ -2,6 +2,11 @@ package com.example.trainersapp.model
 
 import com.example.trainersapp.R
 
+
+
+
+
+
 class ShoeDataSource {
 
     fun loadData(): List<ShoeData> {

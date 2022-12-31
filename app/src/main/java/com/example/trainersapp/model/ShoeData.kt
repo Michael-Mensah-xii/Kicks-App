@@ -10,3 +10,6 @@ data class ShoeData(
     @StringRes val price: Int,
     @StringRes val description: Int,
 )
+
+
+
