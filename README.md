@@ -10,9 +10,9 @@ Install Android Studio on any compatible device
 Screenshots of figma reference:
 ##### https://www.figma.com/file/ICEs5o5lqlbYsEgNu4Grg1/SneakerApp?node-id=12%3A304&t=C6ii2Yh2YqnaGUZt-0
 
-<img height="400" src="../../Downloads/fig ref 1.jpeg" width="500"/>
-<img height="400" src="../../Downloads/fig ref 2.jpeg" width="500"/>
-<img height="400" src="../../Downloads/fig ref 3.jpeg" width="500"/>
+<img height="400" src="../../Downloads/fig ref 1.png" width="500"/>
+<img height="400" src="../../Downloads/fig ref 2.png" width="500"/>
+<img height="400" src="../../Downloads/fig ref 3.png" width="500"/>
 
 # Screenshots
 Screenshots of app
