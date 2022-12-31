@@ -19,14 +19,10 @@ Screenshots of figma reference:
 # Screenshots
 Screenshots of app
 
-<img height="640" src="Screenshots/Screenshot_20221231_212322.png" width="360"/>
-<img height="640" src="Screenshots/Screenshot_20221231_212454.png" width="360"/>
-<img height="640" src="Screenshots/Screenshot_20221231_212532.png" width="360"/>
-<img height="640" src="Screenshots/Screenshot_20221231_212558.png" width="360"/>
-<img height="640" src="Screenshots/Screenshot_20221231_212633.png" width="360"/>
-<img height="640" src="Screenshots/Screenshot_20221231_212645.png" width="360"/>
-<img height="640" src="Screenshots/Screenshot_20221231_212701.png" width="360"/>
-<img height="640" src="Screenshots/Screenshot_20221231_212722.png" width="360"/>
+<img height="640" src="Screenshots/Screenshot_20221231_212322.png" width="360"/><img height="640" src="Screenshots/Screenshot_20221231_212454.png" width="360"/>
+<img height="640" src="Screenshots/Screenshot_20221231_212532.png" width="360"/><img height="640" src="Screenshots/Screenshot_20221231_212558.png" width="360"/>
+<img height="640" src="Screenshots/Screenshot_20221231_212633.png" width="360"/><img height="640" src="Screenshots/Screenshot_20221231_212645.png" width="360"/>
+<img height="640" src="Screenshots/Screenshot_20221231_212701.png" width="360"/><img height="640" src="Screenshots/Screenshot_20221231_212722.png" width="360"/>
 
 # App Visual
 
