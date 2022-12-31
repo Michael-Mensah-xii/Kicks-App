@@ -233,13 +233,13 @@ fun Rating(
         for (i in 1..5) {
             if (i <= rating) {
                 Icon(
-                    painter = painterResource(id = com.example.trainersapp.R.drawable.ic_star),
+                    painter = painterResource(id = R.drawable.ic_star),
                     tint = RatingYellow,
                     contentDescription = null,
                 )
             } else {
                 Icon(
-                    painter = painterResource(id = com.example.trainersapp.R.drawable.ic_star_empty),
+                    painter = painterResource(id = R.drawable.ic_star_empty),
                     contentDescription = null,
                 )
             }
