@@ -90,7 +90,9 @@ fun ShoeGrid(navController: NavHostController) {
         LazyVerticalGrid(
             columns = GridCells.Fixed(2),
             contentPadding = PaddingValues(0.dp),
-            modifier = Modifier.padding(bottom = 48.dp)
+            modifier = Modifier
+                .padding(bottom = 48.dp)
+                .padding(horizontal = 8.dp)
         ) {
             itemsIndexed(destinations) { index, destination ->
                 Row(Modifier.padding(8.dp)) {
@@ -155,20 +157,39 @@ fun GridItemLayout(
 @Composable
 fun LogoRow(navController: NavHostController) {
     val destinations = LogoDataSource().loadData()
-    LazyRow(
-        horizontalArrangement = Arrangement.SpaceBetween,
-        contentPadding = PaddingValues(horizontal = 0.dp),
-        modifier = Modifier.fillMaxWidth()
-    ) {
-        itemsIndexed(destinations) { index, destination ->
-            Row(Modifier
-                .padding(8.dp)
-              ) {
-                LogoItem(destination, index, navController) // pass individual destination object
-            }
-        }
-    }
 
+    Column(
+        modifier = Modifier
+            .heightIn(50.dp)
+    ) {
+
+        LazyRow(
+            horizontalArrangement = Arrangement.SpaceBetween,
+            contentPadding = PaddingValues(horizontal = 0.dp),
+            verticalAlignment = Alignment.Top,
+            modifier = Modifier
+                .fillMaxWidth()
+                .heightIn(50.dp)
+        ) {
+            itemsIndexed(destinations) { index, destination ->
+                Row(Modifier
+                    .padding(8.dp)
+                ) {
+                    LogoItem(destination,
+                        index,
+                        navController) // pass individual destination object
+                }
+            }
+
+        }
+
+        Divider(thickness = 0.5.dp, color = App_divider_colour,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 8.dp)
+                .padding(horizontal = 16.dp)
+        )
+    }
 }
 
 
@@ -179,14 +200,16 @@ fun LogoItem(
     index: Int,
     navController: NavHostController,
 ) {
-    Column(
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally,
+    Box(
         modifier = Modifier
-         //   .size(width = 60.dp, height = 50.dp)
+            //   .size(width = 60.dp, height = 50.dp)
             .clickable {}
+            .clip(RoundedCornerShape(8.dp))
+            .padding(horizontal = 16.dp)
+            .heightIn(40.dp)
     ) {
         Box {
+
             Image(
                 painter = painterResource(id = destination.logo),
                 contentDescription = "brand logo",
@@ -195,11 +218,7 @@ fun LogoItem(
 
                 )
         }
-        Spacer(modifier = Modifier.heightIn(24.dp))
 
-        Divider(thickness = 0.5.dp, color = App_divider_colour,
-            modifier = Modifier
-                .width(44.dp))
     }
 }
 
