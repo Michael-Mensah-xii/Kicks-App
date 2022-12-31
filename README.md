@@ -15,7 +15,7 @@ Screenshots of figma reference:
 #Screenshots
 Screenshots of app
 
-<img width="308" ![Screenshot_20221231_212322](https://user-images.githubusercontent.com/95852329/210156117-f9978aa0-057c-4abe-b79b-368625c4e395.png)>
+![Screenshot_20221231_212322](https://user-images.githubusercontent.com/95852329/210156117-f9978aa0-057c-4abe-b79b-368625c4e395.png)
 ![Screenshot_20221231_212454](https://user-images.githubusercontent.com/95852329/210156119-9051ecd2-44d1-4322-8e88-9160ce252756.png)
 ![Screenshot_20221231_212532](https://user-images.githubusercontent.com/95852329/210156123-ffb92fad-0022-414c-a550-2a50630f209a.png)
 ![Screenshot_20221231_212558](https://user-images.githubusercontent.com/95852329/210156124-8cc3b8b6-b0bd-4815-8092-749d96780f3c.png)
@@ -25,5 +25,7 @@ Screenshots of app
 ![Screenshot_20221231_212722](https://user-images.githubusercontent.com/95852329/210156145-5f35bd0d-3ed4-40ee-bb6a-67763d372a52.png)
 
 
+
+#App Visual
 https://user-images.githubusercontent.com/95852329/210156150-809f3d90-1abb-4428-aa77-33962b324179.mp4
 
