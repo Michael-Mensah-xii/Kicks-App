@@ -137,7 +137,7 @@ fun CartElement(
             horizontalArrangement = Arrangement.SpaceAround,
         ) {
             Image(
-                contentScale = ContentScale.Crop,
+                contentScale = ContentScale.Fit,
                 modifier = Modifier
                     .clip(RoundedCornerShape(8.dp))
                     .size(width = 109.dp, height = 69.dp),
@@ -146,7 +146,6 @@ fun CartElement(
             )
             Column(modifier = Modifier
                 .heightIn(69.dp)
-                .padding(start = 16.dp)
                 .align(Alignment.CenterVertically),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
@@ -200,16 +199,14 @@ val cartData = listOf(
 )
 
 
-
 // plus & minus button
 @Composable
 fun CartItemButton() {
     Box(
         modifier = Modifier
-            .height(35.dp)
-            .padding(8.dp)
+            .height(20.dp)
             .widthIn(15.dp)
-            .background(App_purple_fade),
+            .padding(horizontal = 8.dp)
     ) {
         Row(
             horizontalArrangement = Arrangement.spacedBy(8.dp),
@@ -220,14 +217,15 @@ fun CartItemButton() {
                     .clip(RoundedCornerShape(2.dp))
                     .background(App_purple_alpha)
                     .alpha(0.5f)
-                    .padding(4.dp)
+                    .size(18.dp)
+                    .padding(2.dp)
                     .clickable { },
                 contentAlignment = Alignment.Center
             ) {
                 Icon(
                     modifier =
                     Modifier
-                        .size(10.dp),
+                        .size(24.dp),
                     painter = painterResource(id = R.drawable.minimize),
                     contentDescription = null,
                     tint = Color.Black
@@ -244,12 +242,14 @@ fun CartItemButton() {
                     .clip(RoundedCornerShape(2.dp))
                     .background(App_purple_alpha)
                     .alpha(0.5f)
-                    .padding(4.dp)
+                    .size(18.dp)
+                    .padding(2.dp)
                     .clickable { },
                 contentAlignment = Alignment.Center
             ) {
                 Icon(
-                    modifier = Modifier.size(10.dp),
+                    modifier = Modifier
+                        .size(24.dp),
                     imageVector = Icons.Default.Add,
                     contentDescription = stringResource(R.string.text_add_icon),
                     tint = Color.Black
@@ -272,7 +272,7 @@ fun ConfirmOrderButton(navController: NavController) {
             modifier = Modifier
                 .heightIn(58.dp)
                 .fillMaxWidth(),
-         shape = RoundedCornerShape(32.dp),
+            shape = RoundedCornerShape(32.dp),
             colors = (ButtonDefaults.buttonColors(App_purple)),
             onClick = {
                 navController.navigate("pay_select") {
@@ -292,7 +292,6 @@ fun ConfirmOrderButton(navController: NavController) {
 }
 
 //Cart Column
-
 @Composable
 fun CartElementColumn(navController: NavHostController) {
     Column(modifier = Modifier
@@ -333,8 +332,6 @@ fun CartScreen(navController: NavHostController) {
         CartElementColumn(navController)
     }
 }
-
-
 
 
 @Preview(showBackground = true)
