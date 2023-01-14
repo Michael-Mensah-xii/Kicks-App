@@ -16,7 +16,7 @@ Screenshots of app
 
 <img height="740" src="Screenshots/Screenshot_20221231_212322.png" width="360"/>   <img height="740" src="Screenshots/Screenshot_20221231_212454.png" width="360"/>
 
-<img height="740" src="Screenshots/Screenshot_20221231_212532.png" width="360"/>   <img height="740" src="Screenshots/Screenshot_20221231_212558.png" width="360"/>
+<img alt="homescreen" height="740" src="https://user-images.githubusercontent.com/95852329/212492469-ebac98f9-65d7-4613-9533-621aa52953b3.png" width="360"/>  <img height="740" src="Screenshots/Screenshot_20221231_212558.png" width="360"/>
 
 <img height="740" src="Screenshots/Screenshot_20221231_212633.png" width="360"/>   <img height="740" src="Screenshots/Screenshot_20221231_212645.png" width="360"/>
 
@@ -24,5 +24,5 @@ Screenshots of app
 
 
 # App Visual
-![homescreen](https://user-images.githubusercontent.com/95852329/212492469-ebac98f9-65d7-4613-9533-621aa52953b3.png)
+
 
