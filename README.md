@@ -20,8 +20,7 @@ Screenshots of app
 
 <img height="740" src="Screenshots/Screenshot_20221231_212633.png" width="360"/>   <img height="740" src="Screenshots/Screenshot_20221231_212645.png" width="360"/>
 
-![visacsel](https://user-images.githubusercontent.com/95852329/212492759-e8bc60f2-d54b-49f4-a4c6-66a90fe5ccd8.png)
-![mastersel](https://user-images.githubusercontent.com/95852329/212492762-1ef95dfe-88d6-4f67-932e-b14ea996ac2c.png)
+<img alt="visacsel" height="740" src="https://user-images.githubusercontent.com/95852329/212492759-e8bc60f2-d54b-49f4-a4c6-66a90fe5ccd8.png" width="360"/>  <img alt="mastersel" height="740" src="https://user-images.githubusercontent.com/95852329/212492762-1ef95dfe-88d6-4f67-932e-b14ea996ac2c.png" width="360"/>
 
 
 
