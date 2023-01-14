@@ -5,11 +5,11 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.focus.onFocusEvent
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -21,16 +21,18 @@ import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.trainersapp.R
+import com.example.trainersapp.debitcard_models.CreditCardViewModel
+import com.example.trainersapp.debitcard_models.FieldType
+import com.example.trainersapp.debitcard_models.InputTransformation
+import com.example.trainersapp.debitcard_models.InputValidator
+import com.example.trainersapp.debitcard_views.CreditCard
+import com.example.trainersapp.debitcard_views.CustomTextField
 import com.example.trainersapp.ui.theme.App_purple
 import com.example.trainersapp.ui.theme.App_purple_fade
 import com.example.trainersapp.ui.theme.PoppinsTypography
 
 @Composable
-fun VisaPaymentDetails(navController: NavController) {
-    val textState = rememberSaveable { mutableStateOf("") }
-    val textState1 = rememberSaveable { mutableStateOf("") }
-    val textState2 = rememberSaveable { mutableStateOf("") }
-    val textState3 = rememberSaveable { mutableStateOf("") }
+fun VisaPaymentDetails(navController: NavController, viewModel: CreditCardViewModel) {
 
     Column(
         modifier = Modifier
@@ -57,9 +59,7 @@ fun VisaPaymentDetails(navController: NavController) {
                     contentAlignment = Alignment.Center
                 ) {
                     IconButton(onClick = {
-                        navController.navigate("pay_select") {
-                            popUpTo("pay_select") { inclusive = true }
-                        }
+                        navController.navigateUp()
                     }) {
                         Icon(
                             modifier =
@@ -74,17 +74,17 @@ fun VisaPaymentDetails(navController: NavController) {
             }
             Spacer(modifier = Modifier.heightIn(8.dp))
 
-            Column(modifier = Modifier
-                .fillMaxWidth()
-                .heightIn(220.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
-
-            ) {
-                Image(painter = painterResource(id = R.drawable.visa_card_template),
-                    contentDescription = "visa card")
-            }
-
         }
+
+        CreditCard(
+            number = viewModel.number,
+            expiration = viewModel.expiration,
+            holderName = viewModel.name,
+            cvc = viewModel.cvc,
+            flipped = viewModel.flipped,
+            emptyChar = 'X',
+            showSecurityCode = false
+        )
 
         Spacer(modifier = Modifier.heightIn(16.dp))
 
@@ -96,10 +96,17 @@ fun VisaPaymentDetails(navController: NavController) {
             fontSize = 16.sp,
             textAlign = TextAlign.Start,
         )
-        OutlinedTextField(
-            value = textState.value,
-            onValueChange = { textState.value = it },
+        CustomTextField(
+            value = viewModel.name,
+            onValueChange = {
+                InputValidator.parseHolderName(it)?.let { name ->
+                    viewModel.name = name
+                }
+            },
             modifier = Modifier
+                .onFocusChanged { state ->
+                    if (state.isFocused) viewModel.flipped = false
+                }
                 .border(2.dp, color = App_purple_fade, shape = RoundedCornerShape(8.dp))
                 .fillMaxWidth()
                 .heightIn(min = 60.dp)
@@ -119,10 +126,18 @@ fun VisaPaymentDetails(navController: NavController) {
             fontSize = 16.sp,
             textAlign = TextAlign.Start,
         )
-        OutlinedTextField(
-            value = textState1.value,
-            onValueChange = { textState1.value = it },
+        CustomTextField(
+            value = viewModel.number,
+            onValueChange = {
+                viewModel.number =
+                    if (viewModel.number.length >= 16) viewModel.number.substring(0..15) else it
+
+
+            },
             modifier = Modifier
+                .onFocusChanged { state ->
+                    if (state.isFocused) viewModel.flipped = false
+                }
                 .fillMaxWidth()
                 .border(2.dp, color = App_purple_fade, shape = RoundedCornerShape(8.dp))
                 .heightIn(min = 60.dp)
@@ -147,17 +162,21 @@ fun VisaPaymentDetails(navController: NavController) {
             .fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            OutlinedTextField(
-                value = textState2.value,
-                placeholder = {
-                    Text(
-                        "Expiry date:  MM/YY",
-                        style = PoppinsTypography.body1,
-                        fontSize = 16.sp,
-                    )
+            CustomTextField(
+                value = viewModel.expiration,
+                visualTransformation = InputTransformation(FieldType.EXPIRATION),
+                placeholder = "Expiry date:  MM/YY",
+                onValueChange = {
+                    viewModel.expiration = if (it.length >= 4) it.substring(0..3) else it
+
+                    // When value is completed, request focus of next field
+                    // if (viewModel.expiration.length >= 4) focusCVC.requestFocus()
                 },
-                onValueChange = { textState2.value = it },
+
                 modifier = Modifier
+                    .onFocusChanged { state ->
+                        if (state.isFocused) viewModel.flipped = false
+                    }
                     .border(2.dp, color = App_purple_fade, shape = RoundedCornerShape(8.dp))
                     .widthIn(min = 192.dp)
                     .heightIn(min = 60.dp)
@@ -168,17 +187,18 @@ fun VisaPaymentDetails(navController: NavController) {
             )
 
 
-            OutlinedTextField(
-                value = textState3.value,
-                placeholder = {
-                    Text(
-                        "CVV:",
-                        style = PoppinsTypography.body1,
-                        fontSize = 16.sp,
-                    )
+            CustomTextField(
+                value = viewModel.cvc,
+                placeholder = "CVV",
+                onValueChange = {
+                    InputValidator.parseCVC(it)?.let { cvc ->
+                        viewModel.cvc = cvc
+                    }
                 },
-                onValueChange = { textState3.value = it },
                 modifier = Modifier
+                    .onFocusEvent { state ->
+                        if (state.isFocused) viewModel.flipped = true
+                    }
                     .border(2.dp, color = App_purple_fade, shape = RoundedCornerShape(8.dp))
                     .widthIn(min = 137.dp)
                     .heightIn(min = 60.dp)
@@ -248,7 +268,7 @@ fun VisaPaymentScreen(navController: NavHostController) {
         .fillMaxSize()
         .verticalScroll(rememberScrollState())
     ) {
-        VisaPaymentDetails(navController)
+        VisaPaymentDetails(navController, viewModel = CreditCardViewModel())
     }
 
 }
@@ -260,3 +280,4 @@ fun VisaPaymentScreenPreview() {
     val navController = rememberNavController()
     VisaPaymentScreen(navController)
 }
+

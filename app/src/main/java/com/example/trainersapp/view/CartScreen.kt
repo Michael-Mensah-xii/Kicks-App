@@ -318,7 +318,30 @@ fun CartElementColumn(navController: NavHostController) {
 
             }
         )
-        ConfirmOrderButton(navController)
+        Column(modifier = Modifier
+            .padding(bottom = 32.dp)
+            .padding(horizontal = 16.dp)
+        ) {
+            Button(
+                modifier = Modifier
+                    .heightIn(58.dp)
+                    .fillMaxWidth(),
+                shape = RoundedCornerShape(32.dp),
+                colors = (ButtonDefaults.buttonColors(App_purple)),
+                onClick = {
+                    navController.navigate("pay_select") {
+                        popUpTo("pay_select") { inclusive = true }
+                    }
+                }
+            ) {
+                Text(
+                    stringResource(R.string.confirm_button),
+                    style = PoppinsTypography.button,
+                    color = Color.Black,
+                    fontSize = 18.sp,
+                )
+            }
+        }
     }
 }
 

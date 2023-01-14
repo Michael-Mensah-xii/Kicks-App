@@ -7,9 +7,10 @@ data class ShoeData(
     @DrawableRes val id: Int,
     @StringRes val name: Int,
     val rating: Int,
-    @StringRes val price: Int,
+    val price: Double,
     @StringRes val description: Int,
 )
+
 
 
 

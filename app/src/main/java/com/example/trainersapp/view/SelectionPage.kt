@@ -12,7 +12,6 @@ import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -33,9 +32,9 @@ import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.trainersapp.R
-import com.example.trainersapp.model.DestinationViewModel
 import com.example.trainersapp.model.ShoeData
 import com.example.trainersapp.model.ShoeDataSource
+import com.example.trainersapp.model.ShoeViewModel
 import com.example.trainersapp.ui.theme.App_light_grey
 import com.example.trainersapp.ui.theme.App_purple
 import com.example.trainersapp.ui.theme.App_purple_fade
@@ -43,27 +42,9 @@ import com.example.trainersapp.ui.theme.PoppinsTypography
 
 @Composable
 fun ShoeViewPage(
-    index: String,
+    shoeViewModel: ShoeViewModel,
     navController: NavController,
-    destinationViewModel: DestinationViewModel,
 ) {
-    val dataSource = ShoeDataSource().loadData()
-    val destination = dataSource[index.toInt()]
-    val destinationName = stringResource(destination.name)
-    val destinationDescription = stringResource(destination.description)
-    val destinationImage = painterResource(destination.id)
-
-    LaunchedEffect(Unit) {
-        destinationViewModel.setTitle(destinationName)
-    }
-
-    //increment & decrement & price update logic
-    val priceString = stringResource(destination.price)
-    val priceRegex = "\\d+\\.\\d+".toRegex()
-    val price = priceRegex.find(priceString)?.value
-    val quantity = remember { mutableStateOf(price?.toDouble() ?: 0.0) }
-    val cartItemQuantity = remember { mutableStateOf(1) }
-
 
     Box(modifier = Modifier
     ) {
@@ -88,9 +69,7 @@ fun ShoeViewPage(
                         .background(App_purple_fade)
                         .padding(4.dp)
                         .clickable {
-                            navController.navigate("home") {
-                                popUpTo("home") { inclusive = true }
-                            }
+                            navController.navigateUp()
                         },
                     contentAlignment = Alignment.Center
                 ) {
@@ -126,8 +105,8 @@ fun ShoeViewPage(
 
             }
             Image(
-                painter = destinationImage,
-                contentDescription = destinationName,
+                painter = painterResource(id = shoeViewModel.image),
+                contentDescription = stringResource(id = shoeViewModel.description),
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
                     .fillMaxWidth(),
@@ -149,7 +128,7 @@ fun ShoeViewPage(
                 ) {
 
                     Text(
-                        text = destinationName,
+                        text = stringResource(id = shoeViewModel.name) ,
                         fontSize = 20.sp,
                         fontWeight = FontWeight.Normal,
                         color = Color.Black,
@@ -157,7 +136,7 @@ fun ShoeViewPage(
 
                     Row {
                         Text(
-                            text = String.format("GHS %.2f", quantity.value),
+                            text = String.format("GHS %.2f", shoeViewModel.quantity.value),
                             fontSize = 16.sp,
                             fontWeight = FontWeight.Normal,
                             color = Color.Black,
@@ -254,7 +233,7 @@ fun ShoeViewPage(
 
                     )
                     Rating(
-                        rating = destination.rating,
+                        rating = shoeViewModel.rating,
                         modifier = Modifier
                             .padding(top = 0.dp)
                     )
@@ -264,7 +243,7 @@ fun ShoeViewPage(
                 Spacer(modifier = Modifier.padding(4.dp))
 
                 Text(
-                    text = destinationDescription,
+                    text = stringResource(id =shoeViewModel.description),
                     modifier = Modifier,
                     style = PoppinsTypography.body1,
                     fontSize = 13.sp,
@@ -303,65 +282,58 @@ fun ShoeViewPage(
                     horizontalArrangement = Arrangement.spacedBy(34.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
+
                     //  CartItemButton()
                     Row(horizontalArrangement = Arrangement.spacedBy(16.dp),
                         verticalAlignment = Alignment.CenterVertically,
                         modifier = Modifier.padding(horizontal = 8.dp)
                     ) {
-                        if (price != null) {
-                            Box(
-                                modifier = Modifier
-                                    .clip(RoundedCornerShape(4.dp))
-                                    .size(25.dp)
-                                    .background(App_purple_fade)
-                                    .padding(4.dp)
-                                    .clickable {
-                                        quantity.value -= price.toDouble()
-                                        cartItemQuantity.value -= 1
-
-                                    },
-                                contentAlignment = Alignment.Center
-                            ) {
-                                Icon(
-                                    modifier =
-                                    Modifier
-                                        .size(25.dp),
-                                    painter = painterResource(id = R.drawable.minimize),
-                                    contentDescription = null,
-                                    tint = Color.Black
-                                )
-                            }
+                        Box(
+                            modifier = Modifier
+                                .clip(RoundedCornerShape(4.dp))
+                                .size(25.dp)
+                                .background(App_purple_fade)
+                                .padding(4.dp)
+                                .clickable {
+                                    shoeViewModel.decrementQuantity()
+                                },
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Icon(
+                                modifier =
+                                Modifier
+                                    .size(25.dp),
+                                painter = painterResource(id = R.drawable.minimize),
+                                contentDescription = null,
+                                tint = Color.Black
+                            )
                         }
 
                         Text(
-                            text = "${cartItemQuantity.value}",
+                            text = "${shoeViewModel.cartItemQuantity.value}",
                             fontSize = 15.sp,
                             fontWeight = FontWeight.Medium,
                             color = Color.Black,
                         )
 
 
-                        if (price != null) {
-                            Box(
-                                modifier = Modifier
-                                    .clip(RoundedCornerShape(4.dp))
-                                    .background(App_purple_fade)
-                                    .size(25.dp)
-                                    .padding(4.dp)
-                                    .clickable {
-                                        quantity.value += price.toDouble()
-                                        cartItemQuantity.value += 1
-
-                                    },
-                                contentAlignment = Alignment.Center
-                            ) {
-                                Icon(
-                                    modifier = Modifier.size(25.dp),
-                                    imageVector = Icons.Default.Add,
-                                    contentDescription = stringResource(R.string.text_add_icon),
-                                    tint = Color.Black
-                                )
-                            }
+                        Box(
+                            modifier = Modifier
+                                .clip(RoundedCornerShape(4.dp))
+                                .background(App_purple_fade)
+                                .size(25.dp)
+                                .padding(4.dp)
+                                .clickable {
+                                    shoeViewModel.incrementQuantity()
+                                },
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Icon(
+                                modifier = Modifier.size(25.dp),
+                                imageVector = Icons.Default.Add,
+                                contentDescription = stringResource(R.string.text_add_icon),
+                                tint = Color.Black
+                            )
                         }
                     }
 
@@ -393,6 +365,8 @@ fun ShoeViewPage(
 }
 
 
+
+
 @Composable
 fun SimilarMatchRow(navController: NavHostController) {
     val destinations = ShoeDataSource().loadData()
@@ -412,8 +386,6 @@ fun SimilarMatchRow(navController: NavHostController) {
 }
 
 
-
-
 @Composable
 fun SimilarMatchLayout(
     destination: ShoeData,
@@ -424,19 +396,35 @@ fun SimilarMatchLayout(
         verticalArrangement = Arrangement.Center,
         modifier = Modifier
             .widthIn(112.dp)
-            .clickable {
-               // navController.navigate("details/$index")
-            }
+            .clip(RoundedCornerShape(8.dp))
+            .clickable {}
     ) {
-        Image(
-            painter = painterResource(destination.id),
-            contentDescription = stringResource(destination.name),
-            modifier = Modifier
-                .widthIn(112.dp)
-                .heightIn(78.dp)
-                .clip(RoundedCornerShape(8.dp)),
-            contentScale = ContentScale.Crop,
-        )
+        Box {
+            Image(
+                painter = painterResource(destination.id),
+                contentDescription = stringResource(destination.name),
+                modifier = Modifier
+                    .widthIn(112.dp)
+                    .heightIn(78.dp)
+                    .clip(RoundedCornerShape(8.dp)),
+                contentScale = ContentScale.Crop,
+            )
+            Box(modifier = Modifier
+                .clip(RoundedCornerShape(8.dp))
+                .background(App_purple_fade)
+                .align(Alignment.TopEnd)
+                .padding(2.dp)
+            ) {
+                Text(
+                    text = String.format("GHS %.2f", destination.price),
+                    color = Color.Black,
+                    style = PoppinsTypography.body1,
+                    fontSize = 7.sp,
+                )
+            }
+        }
+
+
         Spacer(modifier = Modifier.heightIn(10.dp))
 
         Row(modifier = Modifier
@@ -454,21 +442,18 @@ fun SimilarMatchLayout(
             Rating(rating = destination.rating)
         }
 
-        Text(
-            text = stringResource(destination.price),
-            color = Color.Black,
-            style = PoppinsTypography.body1,
-            fontSize = 7.sp,
-        )
     }
+
 }
 
 
 @Composable
 fun ShoeViewPagePreview() {
     val navController = rememberNavController()
-    ShoeViewPage("0", navController, DestinationViewModel())
+    val shoeViewModel = ShoeViewModel("0")
+    ShoeViewPage(shoeViewModel, navController)
 }
+
 
 @Preview(showBackground = true)
 @Composable
@@ -486,7 +471,7 @@ fun SimilarMatchPreview() {
         name = R.string.yellow_adidas_string,
         description = R.string.Reviews,
         rating = 4,
-        price = R.string.price_yellow_adidas
+        price = 300.20
     )
     SimilarMatchLayout(destination, 0, navController)
 }

@@ -5,8 +5,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -19,20 +17,15 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.trainersapp.R
+import com.example.trainersapp.model.LoginViewModel
 import com.example.trainersapp.ui.theme.*
 
 @Composable
-fun SignUpScreen(navController: NavHostController) {
+fun SignUpScreen(navController: NavHostController,viewModel: LoginViewModel) {
     Column(Modifier
         .fillMaxSize()
         .verticalScroll(rememberScrollState())
         .padding(horizontal = 16.dp)) {
-        val textState = rememberSaveable { mutableStateOf("") }
-        val textState1 = rememberSaveable { mutableStateOf("") }
-        val textState2 = rememberSaveable { mutableStateOf("") }
-        val textState3 = rememberSaveable { mutableStateOf("") }
-
-
 
         Column() {
             Text(text = "Skip", modifier = Modifier
@@ -41,7 +34,7 @@ fun SignUpScreen(navController: NavHostController) {
                 .clip(RoundedCornerShape(8.dp))
                 .clickable {
                     navController.navigate("home") {
-                        popUpTo("home") { inclusive = true }
+                        popUpTo(0) { inclusive = true }
                     }
                 }
             )
@@ -62,8 +55,8 @@ fun SignUpScreen(navController: NavHostController) {
         Spacer(modifier = Modifier.heightIn(32.dp))
 
         OutlinedTextField(
-            value = textState.value,
-            onValueChange = { textState.value = it },
+            value = viewModel.firstname,
+            onValueChange = { viewModel.firstname = it },
             placeholder = {
                 Text(
                     "First Name",
@@ -85,8 +78,8 @@ fun SignUpScreen(navController: NavHostController) {
         Spacer(modifier = Modifier.heightIn(24.dp))
 
         OutlinedTextField(
-            value = textState1.value,
-            onValueChange = { textState1.value = it },
+            value = viewModel.lastname,
+            onValueChange = { viewModel.lastname = it },
             placeholder = {
                 Text(
                     "Last Name",
@@ -108,8 +101,8 @@ fun SignUpScreen(navController: NavHostController) {
         Spacer(modifier = Modifier.heightIn(24.dp))
 
         OutlinedTextField(
-            value = textState2.value,
-            onValueChange = { textState2.value = it },
+            value = viewModel.phone,
+            onValueChange = { viewModel.phone = it },
             placeholder = {
                 Text(
                     "Phone",
@@ -131,8 +124,8 @@ fun SignUpScreen(navController: NavHostController) {
         Spacer(modifier = Modifier.heightIn(24.dp))
 
         OutlinedTextField(
-            value = textState3.value,
-            onValueChange = { textState3.value = it },
+            value = viewModel.paswword,
+            onValueChange = { viewModel.paswword = it },
             placeholder = {
                 Text(
                     "Password",
@@ -263,9 +256,12 @@ fun SignUpScreen(navController: NavHostController) {
 
 }
 
+
+
 @Preview(showBackground = true)
 @Composable
 fun SignUpScreenPreview() {
     val navController = rememberNavController()
-    SignUpScreen(navController)
+
+    SignUpScreen(navController,viewModel = LoginViewModel())
 }

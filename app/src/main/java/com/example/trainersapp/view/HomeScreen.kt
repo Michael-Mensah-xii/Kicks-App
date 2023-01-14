@@ -32,6 +32,7 @@ import com.example.trainersapp.model.LogoDataSource
 import com.example.trainersapp.model.ShoeData
 import com.example.trainersapp.model.ShoeDataSource
 import com.example.trainersapp.ui.theme.App_divider_colour
+import com.example.trainersapp.ui.theme.App_purple_fade
 import com.example.trainersapp.ui.theme.PoppinsTypography
 import com.example.trainersapp.ui.theme.RatingYellow
 
@@ -39,16 +40,11 @@ import com.example.trainersapp.ui.theme.RatingYellow
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun HomeScreen(
-    navController: NavHostController) {
+    navController: NavHostController,
+) {
     Box(modifier = Modifier)
     {
-        Column(modifier = Modifier
-            .fillMaxHeight()
-            //.verticalScroll(rememberScrollState())
-        ) {
 
-
-        }
         ShoeGrid(navController)
 
     }
@@ -89,7 +85,7 @@ fun ShoeGrid(navController: NavHostController) {
             columns = GridCells.Fixed(2),
             contentPadding = PaddingValues(0.dp),
             modifier = Modifier
-                .padding(bottom = 48.dp)
+                .padding(bottom = 48.dp, top = 8.dp)
                 .padding(horizontal = 8.dp)
         ) {
             itemsIndexed(destinations) { index, destination ->
@@ -111,24 +107,46 @@ fun GridItemLayout(
     Column(
         verticalArrangement = Arrangement.Center,
         modifier = Modifier
-            .widthIn(185.dp)
+            .clip(RoundedCornerShape(8.dp))
             .clickable {
                 navController.navigate("details/$index")
             }
     ) {
-        Image(
-            painter = painterResource(destination.id),
-            contentDescription = stringResource(destination.name),
-            modifier = Modifier
-                .widthIn(185.dp)
-                .heightIn(140.dp)
-                .clip(RoundedCornerShape(8.dp)),
-            contentScale = ContentScale.Fit,
-        )
+        Box {
+            Image(
+                painter = painterResource(destination.id),
+                contentDescription = stringResource(destination.name),
+                modifier = Modifier
+                    .widthIn(185.dp)
+                    .heightIn(130.dp)
+                    .clip(RoundedCornerShape(8.dp)),
+                contentScale = ContentScale.Fit,
+            )
+            Row(
+                modifier = Modifier
+                    .widthIn(min = 175.dp),
+                horizontalArrangement = Arrangement.End
+            ) {
+                Box(modifier = Modifier
+                    .clip(RoundedCornerShape(8.dp))
+                    .background(App_purple_fade)
+                    // .align(Alignment.TopEnd)
+                    .padding(2.dp)
+                ) {
+
+                    Text(
+                        String.format("GHS %.2f", destination.price), color = Color.Black,
+                        style = PoppinsTypography.body1,
+                        fontSize = 8.sp,
+                    )
+                }
+            }
+        }
         Spacer(modifier = Modifier.heightIn(10.dp))
 
         Row(modifier = Modifier
-            .widthIn(185.dp),
+            .widthIn(169.dp)
+            .padding(start = 8.dp),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Text(
@@ -142,12 +160,6 @@ fun GridItemLayout(
             Rating(rating = destination.rating)
         }
 
-        Text(
-            text = stringResource(destination.price),
-            color = Color.Black,
-            style = PoppinsTypography.body1,
-            fontSize = 8.sp,
-        )
     }
 }
 
@@ -204,7 +216,7 @@ fun LogoItem(
     ) {
         Column(
             modifier = Modifier
-                .clip(RoundedCornerShape(4.dp))
+                .clip(RoundedCornerShape(40.dp))
                 .clickable {
                     // Update the selectedIndex state when the LogoItem is clicked
                     onSelected(index)
@@ -269,7 +281,7 @@ fun GridItemLayoutPreview() {
         name = R.string.yellow_adidas_string,
         description = R.string.Reviews,
         rating = 4,
-        price = R.string.price_yellow_adidas
+        price = 200.00
     )
     SimilarMatchLayout(destination, 0, navController)
 }
