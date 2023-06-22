@@ -1,15 +1,20 @@
-# Kicks-App
-sneaker shopping app based on figma UI
-
-# Installation
-Install Android Studio on any compatible device
+## Kicks-App
+ * An implementation of a Figma design of an app for shopping for sneakers
 
 
 
-# Figma Reference
+## Installation
+* Install Android Studio on any compatible device
+
+## Built with
+* Jetpack Compose
+
+
+## Figma Reference
 ##### https://www.figma.com/file/ICEs5o5lqlbYsEgNu4Grg1/SneakerApp?node-id=12%3A304&t=C6ii2Yh2YqnaGUZt-0
 
 
+<br>
 
 # Screenshots
 Screenshots of app
@@ -22,8 +27,7 @@ Screenshots of app
 
 <img alt="visacsel" height="740" src="https://user-images.githubusercontent.com/95852329/212492759-e8bc60f2-d54b-49f4-a4c6-66a90fe5ccd8.png" width="360"/>  <img alt="mastersel" height="740" src="https://user-images.githubusercontent.com/95852329/212492762-1ef95dfe-88d6-4f67-932e-b14ea996ac2c.png" width="360"/>
 
-
-
 # App Visual
+https://github.com/Michael-Mensah-xii/Kicks-App/assets/95852329/8dbbfe63-730c-48d0-822b-9f873f354f42
 
 
