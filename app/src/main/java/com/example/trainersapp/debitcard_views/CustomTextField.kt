@@ -1,4 +1,4 @@
-package com.example.trainersapp.debitcard_views
+package com.example.trainersapp.view
 
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -12,7 +12,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.VisualTransformation
 
 /**
- * Delete icon placed in the right side of the field
+ * Delete icon placed on the right of the field
  * This component is rendered when the value of the input is not blank
  */
 

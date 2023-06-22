@@ -1,18 +1,39 @@
 package com.example.trainersapp.view
 
-import androidx.compose.foundation.*
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.*
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.Button
+import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.focus.onFocusEvent
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -26,13 +47,16 @@ import com.example.trainersapp.debitcard_models.FieldType
 import com.example.trainersapp.debitcard_models.InputTransformation
 import com.example.trainersapp.debitcard_models.InputValidator
 import com.example.trainersapp.debitcard_views.CreditCard
-import com.example.trainersapp.debitcard_views.CustomTextField
 import com.example.trainersapp.ui.theme.App_purple
 import com.example.trainersapp.ui.theme.App_purple_fade
 import com.example.trainersapp.ui.theme.PoppinsTypography
 
 @Composable
 fun MastercardPaymentDetails(navController: NavController, viewModel: CreditCardViewModel) {
+
+    val focusHolderNum = FocusRequester()
+    val focusExpiration = FocusRequester()
+    val focusCVV = FocusRequester()
 
     Column(
         modifier = Modifier
@@ -103,6 +127,8 @@ fun MastercardPaymentDetails(navController: NavController, viewModel: CreditCard
                     viewModel.name = name
                 }
             },
+            nextFocus = focusHolderNum,
+
             modifier = Modifier
                 .onFocusChanged { state ->
                     if (state.isFocused) viewModel.flipped = false
@@ -132,12 +158,18 @@ fun MastercardPaymentDetails(navController: NavController, viewModel: CreditCard
                 viewModel.number =
                     if (viewModel.number.length >= 16) viewModel.number.substring(0..15) else it
 
+                // When value is completed, request focus of next field
+                if (viewModel.number.length >= 16) focusExpiration.requestFocus()
 
             },
+            keyboardType = KeyboardType.Number,
+            nextFocus = focusExpiration,
+
             modifier = Modifier
                 .onFocusChanged { state ->
                     if (state.isFocused) viewModel.flipped = false
                 }
+                .focusRequester(focusHolderNum)
                 .fillMaxWidth()
                 .border(2.dp, color = App_purple_fade, shape = RoundedCornerShape(8.dp))
                 .heightIn(min = 60.dp)
@@ -158,8 +190,9 @@ fun MastercardPaymentDetails(navController: NavController, viewModel: CreditCard
 
         Spacer(modifier = Modifier.heightIn(24.dp))
 
-        Row(modifier = Modifier
-            .fillMaxWidth(),
+        Row(
+            modifier = Modifier
+                .fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             CustomTextField(
@@ -170,13 +203,17 @@ fun MastercardPaymentDetails(navController: NavController, viewModel: CreditCard
                     viewModel.expiration = if (it.length >= 4) it.substring(0..3) else it
 
                     // When value is completed, request focus of next field
-                    // if (viewModel.expiration.length >= 4) focusCVC.requestFocus()
+                    if (viewModel.expiration.length >= 4) focusCVV.requestFocus()
                 },
+                keyboardType = KeyboardType.Number,
+                nextFocus = focusCVV,
+
 
                 modifier = Modifier
                     .onFocusChanged { state ->
                         if (state.isFocused) viewModel.flipped = false
                     }
+                    .focusRequester(focusExpiration)
                     .border(2.dp, color = App_purple_fade, shape = RoundedCornerShape(8.dp))
                     .widthIn(min = 192.dp)
                     .heightIn(min = 60.dp)
@@ -195,10 +232,13 @@ fun MastercardPaymentDetails(navController: NavController, viewModel: CreditCard
                         viewModel.cvc = cvc
                     }
                 },
+                keyboardType = KeyboardType.Number,
+
                 modifier = Modifier
                     .onFocusEvent { state ->
                         if (state.isFocused) viewModel.flipped = true
                     }
+                    .focusRequester(focusCVV)
                     .border(2.dp, color = App_purple_fade, shape = RoundedCornerShape(8.dp))
                     .widthIn(min = 137.dp)
                     .heightIn(min = 60.dp)
@@ -264,11 +304,12 @@ fun MastercardPaymentDetails(navController: NavController, viewModel: CreditCard
 
 @Composable
 fun MastercardPaymentScreen(navController: NavHostController) {
-    Column(modifier = Modifier
-        .fillMaxSize()
-        .verticalScroll(rememberScrollState())
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .verticalScroll(rememberScrollState())
     ) {
-        MastercardPaymentDetails(navController,viewModel = CreditCardViewModel())
+        MastercardPaymentDetails(navController, viewModel = CreditCardViewModel())
     }
 
 }
