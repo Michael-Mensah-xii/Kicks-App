@@ -6,20 +6,25 @@
 ## Installation
 * Install Android Studio on any compatible device
 
+
 ## Built with
 * Jetpack Compose
 
 
+
 ## Figma Reference
-##### https://www.figma.com/file/ICEs5o5lqlbYsEgNu4Grg1/SneakerApp?node-id=12%3A304&t=C6ii2Yh2YqnaGUZt-0
+###### https://www.figma.com/file/ICEs5o5lqlbYsEgNu4Grg1/SneakerApp?node-id=12%3A304&t=C6ii2Yh2YqnaGUZt-0
+![image](https://github.com/Michael-Mensah-xii/Kicks-App/assets/95852329/e2faffbf-fb39-4f79-8a13-dc69a0721d75)
+
 
 
 <br>
 
 ## Screenshots
-![image](https://github.com/Michael-Mensah-xii/Kicks-App/assets/95852329/0d3357b5-a8b5-444d-929f-f869beac8945)
+![image](https://github.com/Michael-Mensah-xii/Kicks-App/assets/95852329/7a8bfcc5-4792-4144-abe6-a9c54e2b2939)
 
-![image](https://github.com/Michael-Mensah-xii/Kicks-App/assets/95852329/09b5ddc6-9880-4606-954b-e231a1f5e92e)
+![image](https://github.com/Michael-Mensah-xii/Kicks-App/assets/95852329/46d32c16-d1ac-4283-9cf9-4a5a537c7eaf)
+
 
 
 ## App Visual
