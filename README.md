@@ -16,18 +16,13 @@
 
 <br>
 
-# Screenshots
-Screenshots of app
+## Screenshots
+![image](https://github.com/Michael-Mensah-xii/Kicks-App/assets/95852329/0d3357b5-a8b5-444d-929f-f869beac8945)
 
-<img height="740" src="Screenshots/Screenshot_20221231_212322.png" width="360"/>   <img height="740" src="Screenshots/Screenshot_20221231_212454.png" width="360"/>
+![image](https://github.com/Michael-Mensah-xii/Kicks-App/assets/95852329/09b5ddc6-9880-4606-954b-e231a1f5e92e)
 
-<img alt="homescreen" height="740" src="https://user-images.githubusercontent.com/95852329/212492469-ebac98f9-65d7-4613-9533-621aa52953b3.png" width="360"/>  <img alt="shoeviewpg" height="740" src="https://user-images.githubusercontent.com/95852329/212493043-7888f02f-a2f7-4539-bd7c-56e4f9ec0f25.png" width="360"/>
 
-<img height="740" src="Screenshots/Screenshot_20221231_212633.png" width="360"/>   <img height="740" src="Screenshots/Screenshot_20221231_212645.png" width="360"/>
-
-<img alt="visacsel" height="740" src="https://user-images.githubusercontent.com/95852329/212492759-e8bc60f2-d54b-49f4-a4c6-66a90fe5ccd8.png" width="360"/>  <img alt="mastersel" height="740" src="https://user-images.githubusercontent.com/95852329/212492762-1ef95dfe-88d6-4f67-932e-b14ea996ac2c.png" width="360"/>
-
-# App Visual
+## App Visual
 https://github.com/Michael-Mensah-xii/Kicks-App/assets/95852329/8dbbfe63-730c-48d0-822b-9f873f354f42
 
 
