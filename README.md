@@ -13,7 +13,6 @@
 
 
 ## Figma Reference
-###### https://www.figma.com/file/ICEs5o5lqlbYsEgNu4Grg1/SneakerApp?node-id=12%3A304&t=C6ii2Yh2YqnaGUZt-0
 ![image](https://github.com/Michael-Mensah-xii/Kicks-App/assets/95852329/e2faffbf-fb39-4f79-8a13-dc69a0721d75)
 
 
