@@ -14,6 +14,7 @@ import androidx.compose.material.TabRowDefaults
 import androidx.compose.material.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -39,7 +40,8 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalPagerApi::class)
 @Composable
-fun HomeScreen( onItemClicked: (item: Int) -> Unit
+fun HomeScreen(
+    onItemClicked: (item: Int) -> Unit,
 ) {
     //tabs
     val tabs = listOf(
@@ -86,7 +88,9 @@ fun HomeScreen( onItemClicked: (item: Int) -> Unit
         // Tab row
         TabRow(
             selectedTabIndex = pagerState.currentPage,
-            modifier = Modifier.fillMaxWidth() .padding(horizontal = 16.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp),
             backgroundColor = MaterialTheme.colors.background,
             contentColor = Color.Black,
             indicator = { tabPositions ->
@@ -131,20 +135,18 @@ fun HomeContent(onItemClicked: (item: Int) -> Unit) {
 
 @Composable
 fun PumaContent() {
-    // Content for the Puma tab goes here
+    // Content for the Puma tab
 }
 
 @Composable
 fun AdidasContent() {
-    // Content for the Adidas tab goes here
+    // Content for the Adidas tab
 }
 
 @Composable
 fun VansContent() {
-    // Content for the Vans tab goes here
+    // Content for the Vans tab
 }
-
-
 
 
 @ExperimentalFoundationApi
@@ -159,9 +161,10 @@ fun ShoeGrid(onItemClicked: (item: Int) -> Unit) {
         contentPadding = PaddingValues(horizontal = 16.dp, vertical = 16.dp),
         modifier = Modifier
             .fillMaxSize()
+            .padding(bottom = 40.dp)
     ) {
         itemsIndexed(destinations) { item, destination ->
-                GridItemLayout(destination, onItemClicked = { onItemClicked(item) })
+            GridItemLayout(destination, onItemClicked = { onItemClicked(item) })
         }
     }
 }
@@ -175,6 +178,7 @@ fun GridItemLayout(
     Column(
         verticalArrangement = Arrangement.Center,
         modifier = Modifier
+            .widthIn(185.dp)
             .clip(RoundedCornerShape(8.dp))
             .clickable { (onItemClicked()) }
     ) {
@@ -186,24 +190,21 @@ fun GridItemLayout(
                     .widthIn(185.dp)
                     .heightIn(130.dp)
                     .clip(RoundedCornerShape(8.dp)),
-                contentScale = ContentScale.Fit,
+                contentScale = ContentScale.Crop,
             )
-            Row(
-                modifier = Modifier.widthIn(min = 175.dp), horizontalArrangement = Arrangement.End
-            ) {
-                Box(
-                    modifier = Modifier
-                        .clip(RoundedCornerShape(8.dp))
-                        .background(App_purple_fade)
-                        .padding(2.dp)
-                ) {
 
-                    Text(
-                        String.format("GHS %.2f", destination.price), color = Color.Black,
-                        style = PoppinsTypography.body1,
-                        fontSize = 8.sp,
-                    )
-                }
+            Box(
+                modifier = Modifier
+                    .clip(RoundedCornerShape(8.dp))
+                    .background(App_purple_fade)
+                    .padding(2.dp)
+                    .align(Alignment.TopEnd)
+            ) {
+                Text(
+                    String.format("GHS %.2f", destination.price), color = Color.Black,
+                    style = PoppinsTypography.body1,
+                    fontSize = 8.sp,
+                )
             }
         }
         Spacer(modifier = Modifier.heightIn(10.dp))
@@ -265,7 +266,7 @@ fun GridItemLayoutPreview() {
         rating = 4,
         price = 200.00
     )
-    SimilarMatchLayout(destination,  onItemClicked = {})
+    SimilarMatchLayout(destination, onItemClicked = {})
 }
 
 

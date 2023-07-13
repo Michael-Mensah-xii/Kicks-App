@@ -12,7 +12,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -130,20 +130,23 @@ fun LoadingPage(navController: NavHostController) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-        ) {
+                .padding(horizontal = 16.dp)
+                .padding(top = 640.dp)
+        )
+        {
             Text(
                 text = "Good shoes take you\nplaces",
                 modifier = Modifier
-                    .widthIn(90.dp)
-                    .heightIn(72.dp)
-                    .padding(top = 630.dp)
-                    .padding(horizontal = 16.dp),
+                    .fillMaxWidth() // Take the full width available
+                    .wrapContentHeight() // Adjust height based on content
+                    .padding(vertical = 8.dp), // Add some vertical padding for spacing
                 style = PoppinsTypography.h3,
                 color = Color.Black,
                 fontSize = 24.sp,
                 textAlign = TextAlign.Start,
             )
         }
+
 
         Column(
             modifier = Modifier
