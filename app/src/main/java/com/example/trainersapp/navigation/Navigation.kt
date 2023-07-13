@@ -40,8 +40,7 @@ fun TrainersApp() {
             if (topBarState.value) {
                 TopBar(navController)
             }
-        },
-        bottomBar = {
+        }, bottomBar = {
             if (bottomBarState.value) {
                 BottomNavigationBar(navController)
             }
@@ -55,45 +54,64 @@ fun TrainersApp() {
 
 
             //SignUpScreen
-            composable(route = Screen.SignUpScreen.route) { SignUpScreen(navController,
-                LoginViewModel()) }
+            composable(route = Screen.SignUpScreen.route) {
+                SignUpScreen(
+                    navController, LoginViewModel()
+                )
+            }
 
 
             //HomeScreen
-            composable(route = Screen.HomeScreen.route) { HomeScreen(navController) }
+            composable(route = Screen.HomeScreen.route) {
+                HomeScreen(onItemClicked = { item ->
+                    navController.navigate(Screen.ShoeViewPage.createRouteWithItem(item))
+                })
+            }
 
 
             //SimilarMatchRow Screen
-            composable(route = Screen.SimilarMatchRow.route) { SimilarMatchRow(navController) }
+            composable(route = Screen.SimilarMatchRow.route) { SimilarMatchRow(onItemClicked = {}) }
 
 
             //ShoeViewPage Screen
             composable(route = Screen.ShoeViewPage.route) { backStackEntry ->
-                backStackEntry.arguments?.getString("listId")
-                    ?.let { ShoeViewPage(ShoeViewModel(it), navController) }
+                backStackEntry.arguments?.getString("item")?.let {
+                    ShoeViewPage(ShoeViewModel(it), onBackPress = {
+                        navController.navigate(Screen.HomeScreen.route) {
+                            navController.navigateUp()
+                        }
+                    }, onItemClicked = { item ->
+                        navController.navigate(Screen.ShoeViewPage.createRouteWithItem(item))
+                    })
+                }
             }
 
             //OnBoarding Screen
             composable(route = Screen.CartScreen.route) { CartScreen(navController) }
 
             //PaymentList Screen
-            composable(route = Screen.PaymentList.route) { PaymentList(navController) }
+            composable(route = Screen.PaymentList.route) {
+                PaymentList(openVisaPayment = {
+                    navController.navigate("visa_select") {
+                        popUpTo("visa_select") { inclusive = true }
+                    }
+                }, openMasterCardPayment = {
+                    navController.navigate("mastercard_select") {
+                        popUpTo("mastercard_select") { inclusive = true }
+                    }
+                }, upPress = { navController.navigateUp() })
+            }
 
             //VisaPaymentScreen
-            composable(route = Screen.VisaPaymentScreen.route) { VisaPaymentScreen(navController) }
+            composable(route = Screen.VisaPaymentScreen.route) { VisaPaymentScreen(upPress = { navController.navigateUp() }) }
 
             //MastercardPaymentScreen
-            composable(route = Screen.MastercardPaymentScreen.route) { MastercardPaymentScreen(navController) }
+            composable(route = Screen.MastercardPaymentScreen.route) {
+                MastercardPaymentScreen(upPress = { navController.navigateUp() })
+            }
         }
     }
 }
-
-/**
- composable("details/{listId}") { backStackEntry ->
-backStackEntry.arguments?.getString("listId")
-?.let { ShoeViewPage(ShoeViewModel(it) , navController) }
-}
- */
 
 
 @Composable
@@ -105,20 +123,17 @@ fun BottomBarAnimation(
     val navBackStackEntry by navController.currentBackStackEntryAsState()
 
     // Control BottomBar
-    when (navBackStackEntry?.destination?.route) {
-        "onBoarding","signUp","cart","details/{listId}","mastercard_select","visa_select","pay_select" -> {
-            // Hide BottomBar
-            bottomBarState.value = false
-            // Hide TopBar
-            topBarState.value = false
-        }
-        else -> {
-            // Show BottomBar
-            bottomBarState.value = true
-            // Show TopBar
-            topBarState.value = true
-        }
+    if (navBackStackEntry?.destination?.route != "home") {
+        // Hide BottomBar
+        bottomBarState.value = false
+        // Hide TopBar
+        topBarState.value = false
+    } else {
+        // Show BottomBar
+        bottomBarState.value = true
+        // Show TopBar
+        topBarState.value = true
     }
-
 }
+
 

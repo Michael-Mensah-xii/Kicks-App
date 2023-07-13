@@ -2,18 +2,18 @@ package com.example.trainersapp.view
 
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.itemsIndexed
-import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Divider
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Tab
+import androidx.compose.material.TabRow
+import androidx.compose.material.TabRowDefaults
+import androidx.compose.material.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -24,42 +24,52 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import com.example.trainersapp.R
-import com.example.trainersapp.model.LogoData
-import com.example.trainersapp.model.LogoDataSource
 import com.example.trainersapp.model.ShoeData
 import com.example.trainersapp.model.ShoeDataSource
-import com.example.trainersapp.ui.theme.App_divider_colour
+import com.example.trainersapp.navigation.TabItem
 import com.example.trainersapp.ui.theme.App_purple_fade
 import com.example.trainersapp.ui.theme.PoppinsTypography
 import com.example.trainersapp.ui.theme.RatingYellow
+import com.google.accompanist.pager.ExperimentalPagerApi
+import com.google.accompanist.pager.HorizontalPager
+import com.google.accompanist.pager.rememberPagerState
+import kotlinx.coroutines.launch
 
 
-@OptIn(ExperimentalFoundationApi::class)
+@OptIn(ExperimentalPagerApi::class)
 @Composable
-fun HomeScreen(
-    navController: NavHostController,
+fun HomeScreen( onItemClicked: (item: Int) -> Unit
 ) {
-    Box(modifier = Modifier)
-    {
+    //tabs
+    val tabs = listOf(
+        TabItem(
+            title = "Nike",
+            logo = R.drawable.nike_logo,
+            screen = { TabScreen(content = { HomeContent(onItemClicked) }) }),
 
-        ShoeGrid(navController)
+        TabItem(title = "Puma",
+            logo = R.drawable.puma_logo,
+            screen = { TabScreen(content = { PumaContent() }) }),
 
-    }
+        TabItem(title = "Adidas",
+            logo = R.drawable.adidas_logo,
+            screen = { TabScreen(content = { AdidasContent() }) }),
+
+        TabItem(title = "Vans",
+            logo = R.drawable.vans_logo,
+            screen = { TabScreen(content = { VansContent() }) })
+    )
 
 
-}
+    val pagerState = rememberPagerState()
+    val coroutineScope = rememberCoroutineScope()
 
-
-@ExperimentalFoundationApi
-@Composable
-fun ShoeGrid(navController: NavHostController) {
-    val destinations = ShoeDataSource().loadData()
-
-
-    Column() {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colors.background)
+    ) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
@@ -73,25 +83,84 @@ fun ShoeGrid(navController: NavHostController) {
                 fontSize = 16.sp,
             )
         }
-        Spacer(modifier = Modifier.heightIn(16.dp))
-
-
-        //logo row
-        LogoRow(navController)
-
-        Spacer(modifier = Modifier.heightIn(0.dp))
-
-        LazyVerticalGrid(
-            columns = GridCells.Fixed(2),
-            contentPadding = PaddingValues(0.dp),
-            modifier = Modifier
-                .padding(bottom = 48.dp, top = 8.dp)
-                .padding(horizontal = 8.dp)
-        ) {
-            itemsIndexed(destinations) { index, destination ->
-                Row(Modifier.padding(8.dp)) {
-                    GridItemLayout(destination, index, navController)
+        // Tab row
+        TabRow(selectedTabIndex = pagerState.currentPage,
+            modifier = Modifier.fillMaxWidth(),
+            backgroundColor = MaterialTheme.colors.background,
+            contentColor = Color.Black,
+            indicator = { tabPositions ->
+                TabRowDefaults.Indicator(
+                    color = Color.Black,
+                    height = 2.dp,
+                    modifier = Modifier.tabIndicatorOffset(tabPositions[pagerState.currentPage])
+                )
+            }) {
+            tabs.forEachIndexed { index, tabItem ->
+                Tab(
+                    selected = pagerState.currentPage == index, onClick = {
+                        coroutineScope.launch {
+                            pagerState.animateScrollToPage(index)
+                        }
+                    }, modifier = Modifier.padding(vertical = 16.dp, horizontal = 8.dp)
+                ) {
+                    Image(
+                        painter = painterResource(tabItem.logo),
+                        contentDescription = tabItem.title,
+                        modifier = Modifier.heightIn(40.dp)
+                    )
                 }
+            }
+        }
+        // Content
+        HorizontalPager(
+            count = tabs.size, state = pagerState
+        ) { page ->
+            tabs[page].screen()
+        }
+    }
+}
+
+@OptIn(ExperimentalFoundationApi::class)
+@Composable
+fun HomeContent(onItemClicked: (item: Int) -> Unit) {
+    Box(modifier = Modifier) {
+        ShoeGrid(onItemClicked)
+    }
+}
+
+@Composable
+fun PumaContent() {
+    // Content for the Puma tab goes here
+}
+
+@Composable
+fun AdidasContent() {
+    // Content for the Adidas tab goes here
+}
+
+@Composable
+fun VansContent() {
+    // Content for the Vans tab goes here
+}
+
+
+
+
+@ExperimentalFoundationApi
+@Composable
+fun ShoeGrid(onItemClicked: (item: Int) -> Unit) {
+    val destinations = ShoeDataSource().loadData()
+
+    LazyVerticalGrid(
+        columns = GridCells.Fixed(2),
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(top = 16.dp)
+            .padding(horizontal = 8.dp)
+    ) {
+        itemsIndexed(destinations) { item, destination ->
+            Row(Modifier.padding(8.dp)) {
+                GridItemLayout(destination, onItemClicked = { onItemClicked(item) })
             }
         }
     }
@@ -101,16 +170,13 @@ fun ShoeGrid(navController: NavHostController) {
 @Composable
 fun GridItemLayout(
     destination: ShoeData,
-    index: Int,
-    navController: NavHostController,
+    onItemClicked: () -> Unit,
 ) {
     Column(
         verticalArrangement = Arrangement.Center,
         modifier = Modifier
             .clip(RoundedCornerShape(8.dp))
-            .clickable {
-                navController.navigate("details/$index")
-            }
+            .clickable { (onItemClicked()) }
     ) {
         Box {
             Image(
@@ -123,15 +189,13 @@ fun GridItemLayout(
                 contentScale = ContentScale.Fit,
             )
             Row(
-                modifier = Modifier
-                    .widthIn(min = 175.dp),
-                horizontalArrangement = Arrangement.End
+                modifier = Modifier.widthIn(min = 175.dp), horizontalArrangement = Arrangement.End
             ) {
-                Box(modifier = Modifier
-                    .clip(RoundedCornerShape(8.dp))
-                    .background(App_purple_fade)
-                    // .align(Alignment.TopEnd)
-                    .padding(2.dp)
+                Box(
+                    modifier = Modifier
+                        .clip(RoundedCornerShape(8.dp))
+                        .background(App_purple_fade)
+                        .padding(2.dp)
                 ) {
 
                     Text(
@@ -144,9 +208,10 @@ fun GridItemLayout(
         }
         Spacer(modifier = Modifier.heightIn(10.dp))
 
-        Row(modifier = Modifier
-            .widthIn(169.dp)
-            .padding(start = 8.dp),
+        Row(
+            modifier = Modifier
+                .widthIn(169.dp)
+                .padding(start = 8.dp),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Text(
@@ -164,95 +229,13 @@ fun GridItemLayout(
 }
 
 
-//logo row
-@Composable
-fun LogoRow(navController: NavHostController) {
-    val destinations = LogoDataSource().loadData()
-    // Add a state variable to track the currently selected item
-    var selectedIndex by remember { mutableStateOf(-1) }
-
-    Column(
-        modifier = Modifier
-            .heightIn(50.dp)
-    ) {
-        LazyRow(
-            horizontalArrangement = Arrangement.SpaceBetween,
-            // Remove the content padding from the LazyRow
-            contentPadding = PaddingValues(horizontal = 0.dp),
-            verticalAlignment = Alignment.Top,
-            modifier = Modifier
-                .fillMaxWidth()
-                .heightIn(50.dp)
-        ) {
-            itemsIndexed(destinations) { index, destination ->
-                // Pass the selectedIndex and the onSelected callback to the LogoItem composable
-                LogoItem(destination, index, navController, selectedIndex) { newIndex ->
-                    selectedIndex = newIndex
-                }
-            }
-        }
-
-        Divider(thickness = 0.8.dp, color = App_divider_colour,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp)
-        )
-    }
-}
-
-//logo item
-@Composable
-fun LogoItem(
-    destination: LogoData,
-    index: Int,
-    navController: NavHostController,
-    selectedIndex: Int,
-    onSelected: (Int) -> Unit,
-) {
-    Column(
-        modifier = Modifier.widthIn(42.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
-
-    ) {
-        Column(
-            modifier = Modifier
-                .clip(RoundedCornerShape(40.dp))
-                .clickable {
-                    // Update the selectedIndex state when the LogoItem is clicked
-                    onSelected(index)
-                }
-                .padding(horizontal = 16.dp)
-                .heightIn(40.dp)
-        ) {
-            Box {
-                Image(
-                    painter = painterResource
-                        (id = destination.logo),
-                    contentDescription = "brand logo",
-                    //   modifier = Modifier.size(width = 56.dp, height = 28.dp),
-                    contentScale = ContentScale.Crop,
-                )
-            }
-        }
-
-        Spacer(modifier = Modifier.heightIn(10.dp))
-
-        // Use the selectedIndex to determine the color of the divider
-        val dividerColor = if (index == selectedIndex) Color.Black else App_divider_colour
-        Divider(thickness = 0.6.dp, color = dividerColor,
-            modifier = Modifier
-                .widthIn(40.dp)
-        )
-    }
-}
-
-
 //create rating system
 @Composable
 fun Rating(
     rating: Int, modifier: Modifier = Modifier,
 ) {
-    Row(modifier.padding(horizontal = 0.dp)
+    Row(
+        modifier.padding(horizontal = 0.dp)
     ) {
         for (i in 1..5) {
             if (i <= rating) {
@@ -275,7 +258,6 @@ fun Rating(
 @Preview
 @Composable
 fun GridItemLayoutPreview() {
-    val navController = rememberNavController()
     val destination = ShoeData(
         id = R.drawable.yellow_adidas,
         name = R.string.yellow_adidas_string,
@@ -283,35 +265,14 @@ fun GridItemLayoutPreview() {
         rating = 4,
         price = 200.00
     )
-    SimilarMatchLayout(destination, 0, navController)
+    SimilarMatchLayout(destination,  onItemClicked = {})
 }
 
-
-@Preview(showBackground = true)
-@Composable
-fun PreviewLogoItem() {
-    val navController = rememberNavController()
-    val destination = LogoData(
-        logo = R.drawable.vans_logo,
-    )
-    // Add the selectedIndex and onSelected arguments to the LogoItem composable
-    var selectedIndex by remember { mutableStateOf(0) }
-    LogoItem(destination, 0, navController, selectedIndex) { newIndex ->
-        selectedIndex = newIndex
-    }
-}
-
-
-@Preview(showBackground = true)
-@Composable
-fun PreviewLogoRow() {
-    val navController = rememberNavController()
-    LogoRow(navController = navController)
-}
 
 @Preview(showBackground = true)
 @Composable
 fun HomeScreenPreview() {
-    HomeScreen(navController = rememberNavController())
+    HomeScreen(onItemClicked = {})
 
 }
+

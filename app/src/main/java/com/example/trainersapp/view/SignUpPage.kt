@@ -1,9 +1,31 @@
 package com.example.trainersapp.view
 
-import androidx.compose.foundation.*
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.*
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.Button
+import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.Divider
+import androidx.compose.material.Icon
+import androidx.compose.material.OutlinedButton
+import androidx.compose.material.OutlinedTextField
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -18,16 +40,22 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.trainersapp.R
 import com.example.trainersapp.model.LoginViewModel
-import com.example.trainersapp.ui.theme.*
+import com.example.trainersapp.ui.theme.App_divider_colour
+import com.example.trainersapp.ui.theme.App_grey
+import com.example.trainersapp.ui.theme.App_purple
+import com.example.trainersapp.ui.theme.App_purple_fade
+import com.example.trainersapp.ui.theme.PoppinsTypography
 
 @Composable
-fun SignUpScreen(navController: NavHostController,viewModel: LoginViewModel) {
-    Column(Modifier
-        .fillMaxSize()
-        .verticalScroll(rememberScrollState())
-        .padding(horizontal = 16.dp)) {
+fun SignUpScreen(navController: NavHostController, viewModel: LoginViewModel) {
+    Column(
+        Modifier
+            .fillMaxSize()
+            .verticalScroll(rememberScrollState())
+            .padding(horizontal = 16.dp)
+    ) {
 
-        Column() {
+        Column {
             Text(text = "Skip", modifier = Modifier
                 .widthIn(40.dp)
                 .padding(4.dp)
@@ -41,9 +69,10 @@ fun SignUpScreen(navController: NavHostController,viewModel: LoginViewModel) {
         }
 
 
-        Row(modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = 48.dp),
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 48.dp),
             horizontalArrangement = Arrangement.Center
         ) {
             Text(
@@ -190,13 +219,16 @@ fun SignUpScreen(navController: NavHostController,viewModel: LoginViewModel) {
 
         Spacer(modifier = Modifier.heightIn(24.dp))
 
-        Row(modifier = Modifier.fillMaxWidth(),
+        Row(
+            modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Divider(thickness = 0.5.dp, color = App_divider_colour,
+            Divider(
+                thickness = 0.5.dp, color = App_divider_colour,
                 modifier = Modifier
-                    .width(126.dp))
+                    .width(126.dp)
+            )
 
 
             Column {
@@ -213,16 +245,20 @@ fun SignUpScreen(navController: NavHostController,viewModel: LoginViewModel) {
                 )
             }
 
-            Divider(thickness = 0.5.dp, color = App_divider_colour,
+            Divider(
+                thickness = 0.5.dp, color = App_divider_colour,
                 modifier = Modifier
-                    .width(126.dp))
+                    .width(126.dp)
+            )
 
         }
 
         Spacer(modifier = Modifier.heightIn(24.dp))
 
-        Column(modifier = Modifier
-            .padding(bottom = 32.dp))
+        Column(
+            modifier = Modifier
+                .padding(bottom = 32.dp)
+        )
         {
             OutlinedButton(
                 modifier = Modifier
@@ -257,11 +293,10 @@ fun SignUpScreen(navController: NavHostController,viewModel: LoginViewModel) {
 }
 
 
-
 @Preview(showBackground = true)
 @Composable
 fun SignUpScreenPreview() {
     val navController = rememberNavController()
 
-    SignUpScreen(navController,viewModel = LoginViewModel())
+    SignUpScreen(navController, viewModel = LoginViewModel())
 }

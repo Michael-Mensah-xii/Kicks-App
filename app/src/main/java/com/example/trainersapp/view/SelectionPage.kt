@@ -1,10 +1,27 @@
 package com.example.trainersapp.view
 
-import androidx.compose.foundation.*
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Icon
@@ -28,9 +45,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import com.example.trainersapp.R
 import com.example.trainersapp.model.ShoeData
 import com.example.trainersapp.model.ShoeDataSource
@@ -43,14 +57,17 @@ import com.example.trainersapp.ui.theme.PoppinsTypography
 @Composable
 fun ShoeViewPage(
     shoeViewModel: ShoeViewModel,
-    navController: NavController,
+    onBackPress: () -> Unit,
+    onItemClicked: (item: Int) -> Unit,
 ) {
 
-    Box(modifier = Modifier
+    Box(
+        modifier = Modifier
     ) {
-        Column(modifier = Modifier
-            .fillMaxHeight()
-            .verticalScroll(rememberScrollState())
+        Column(
+            modifier = Modifier
+                .fillMaxHeight()
+                .verticalScroll(rememberScrollState())
         ) {
             Row(
                 modifier = Modifier
@@ -69,7 +86,7 @@ fun ShoeViewPage(
                         .background(App_purple_fade)
                         .padding(4.dp)
                         .clickable {
-                            navController.navigateUp()
+                            onBackPress()
                         },
                     contentAlignment = Alignment.Center
                 ) {
@@ -115,12 +132,14 @@ fun ShoeViewPage(
 
 
             //price and name
-            Box(modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 8.dp)
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 8.dp)
             ) {
 
-                Row(verticalAlignment = Alignment.CenterVertically,
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceBetween,
                     modifier = Modifier
                         .padding(horizontal = 16.dp)
@@ -128,7 +147,7 @@ fun ShoeViewPage(
                 ) {
 
                     Text(
-                        text = stringResource(id = shoeViewModel.name) ,
+                        text = stringResource(id = shoeViewModel.name),
                         fontSize = 20.sp,
                         fontWeight = FontWeight.Normal,
                         color = Color.Black,
@@ -214,9 +233,10 @@ fun ShoeViewPage(
             Spacer(modifier = Modifier.height(16.dp))
 
             //Reviews
-            Column(modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp)
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp)
             ) {
                 Row(
                     modifier = Modifier
@@ -243,7 +263,7 @@ fun ShoeViewPage(
                 Spacer(modifier = Modifier.padding(4.dp))
 
                 Text(
-                    text = stringResource(id =shoeViewModel.description),
+                    text = stringResource(id = shoeViewModel.description),
                     modifier = Modifier,
                     style = PoppinsTypography.body1,
                     fontSize = 13.sp,
@@ -267,15 +287,16 @@ fun ShoeViewPage(
                     )
 
             }
-            SimilarMatchRow(navController = rememberNavController())
+            SimilarMatchRow(onItemClicked)
 
             Spacer(modifier = Modifier.heightIn(32.dp))
 
 
-            Column(modifier = Modifier
-                .padding(top = 0.dp)
-                .padding(horizontal = 16.dp)
-                .fillMaxWidth(),
+            Column(
+                modifier = Modifier
+                    .padding(top = 0.dp)
+                    .padding(horizontal = 16.dp)
+                    .fillMaxWidth(),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Row(
@@ -284,7 +305,8 @@ fun ShoeViewPage(
                 ) {
 
                     //  CartItemButton()
-                    Row(horizontalArrangement = Arrangement.spacedBy(16.dp),
+                    Row(
+                        horizontalArrangement = Arrangement.spacedBy(16.dp),
                         verticalAlignment = Alignment.CenterVertically,
                         modifier = Modifier.padding(horizontal = 8.dp)
                     ) {
@@ -365,20 +387,21 @@ fun ShoeViewPage(
 }
 
 
-
-
 @Composable
-fun SimilarMatchRow(navController: NavHostController) {
+fun SimilarMatchRow(onItemClicked: (item: Int) -> Unit) {
     val destinations = ShoeDataSource().loadData()
     LazyRow(
         contentPadding = PaddingValues(0.dp),
-        modifier = Modifier.padding(horizontal = 8.dp)
-    ) {
-        itemsIndexed(destinations) { index, destination ->
-            Row(Modifier
-                .padding(horizontal = 8.dp)
-                .padding(bottom = 8.dp)) {
-                SimilarMatchLayout(destination, index, navController)
+        modifier = Modifier
+            .padding(horizontal = 8.dp)
+        ) {
+        itemsIndexed(destinations) { item, destination ->
+            Row(
+                Modifier
+                    .padding(horizontal = 8.dp)
+                    .padding(bottom = 8.dp)
+            ) {
+                SimilarMatchLayout(destination, onItemClicked = { onItemClicked(item) })
             }
         }
     }
@@ -389,15 +412,14 @@ fun SimilarMatchRow(navController: NavHostController) {
 @Composable
 fun SimilarMatchLayout(
     destination: ShoeData,
-    index: Int,
-    navController: NavHostController,
+    onItemClicked: () -> Unit,
 ) {
     Column(
         verticalArrangement = Arrangement.Center,
         modifier = Modifier
             .widthIn(112.dp)
             .clip(RoundedCornerShape(8.dp))
-            .clickable {}
+            .clickable { (onItemClicked()) }
     ) {
         Box {
             Image(
@@ -409,11 +431,12 @@ fun SimilarMatchLayout(
                     .clip(RoundedCornerShape(8.dp)),
                 contentScale = ContentScale.Crop,
             )
-            Box(modifier = Modifier
-                .clip(RoundedCornerShape(8.dp))
-                .background(App_purple_fade)
-                .align(Alignment.TopEnd)
-                .padding(2.dp)
+            Box(
+                modifier = Modifier
+                    .clip(RoundedCornerShape(8.dp))
+                    .background(App_purple_fade)
+                    .align(Alignment.TopEnd)
+                    .padding(2.dp)
             ) {
                 Text(
                     text = String.format("GHS %.2f", destination.price),
@@ -427,8 +450,9 @@ fun SimilarMatchLayout(
 
         Spacer(modifier = Modifier.heightIn(10.dp))
 
-        Row(modifier = Modifier
-            .widthIn(112.dp),
+        Row(
+            modifier = Modifier
+                .widthIn(112.dp),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Text(
@@ -449,9 +473,8 @@ fun SimilarMatchLayout(
 
 @Composable
 fun ShoeViewPagePreview() {
-    val navController = rememberNavController()
     val shoeViewModel = ShoeViewModel("0")
-    ShoeViewPage(shoeViewModel, navController)
+    ShoeViewPage(shoeViewModel, onBackPress = {}, onItemClicked = {})
 }
 
 
@@ -465,7 +488,6 @@ fun PreviewShoeViewPage() {
 @Preview(showBackground = true)
 @Composable
 fun SimilarMatchPreview() {
-    val navController = rememberNavController()
     val destination = ShoeData(
         id = R.drawable.yellow_adidas,
         name = R.string.yellow_adidas_string,
@@ -473,7 +495,7 @@ fun SimilarMatchPreview() {
         rating = 4,
         price = 300.20
     )
-    SimilarMatchLayout(destination, 0, navController)
+    SimilarMatchLayout(destination, onItemClicked = {})
 }
 
 

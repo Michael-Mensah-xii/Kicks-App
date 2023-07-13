@@ -2,12 +2,31 @@ package com.example.trainersapp.view
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
-import androidx.compose.foundation.*
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.paddingFromBaseline
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.*
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.Button
+import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
+import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
@@ -34,9 +53,10 @@ import com.example.trainersapp.ui.theme.PoppinsTypography
 
 @Composable
 fun TotalPrice(navController: NavController) {
-    Box(modifier = Modifier
-        .fillMaxWidth()
-        .heightIn(32.dp)
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .heightIn(32.dp)
     ) {
         Row(
             modifier = Modifier
@@ -73,10 +93,12 @@ fun TotalPrice(navController: NavController) {
             }
         }
 
-        Row(modifier = Modifier.fillMaxWidth(),
+        Row(
+            modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.Center
         ) {
-            Text(text = "Cart",
+            Text(
+                text = "Cart",
                 style = PoppinsTypography.h1,
                 fontSize = 18.sp,
                 modifier = Modifier.padding(vertical = 48.dp)
@@ -121,12 +143,13 @@ fun CartElement(
     @StringRes text: Int,
     @StringRes price: Int,
 ) {
-    Box(modifier = Modifier
-        .fillMaxWidth()
-        .heightIn(101.dp)
-        .padding(horizontal = 16.dp)
-        .clip(RoundedCornerShape(8.dp))
-        .background(App_purple_fade)
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .heightIn(101.dp)
+            .padding(horizontal = 16.dp)
+            .clip(RoundedCornerShape(8.dp))
+            .background(App_purple_fade)
 
     ) {
         Row(
@@ -144,9 +167,10 @@ fun CartElement(
                 painter = painterResource(id = drawable),
                 contentDescription = "temp",
             )
-            Column(modifier = Modifier
-                .heightIn(69.dp)
-                .align(Alignment.CenterVertically),
+            Column(
+                modifier = Modifier
+                    .heightIn(69.dp)
+                    .align(Alignment.CenterVertically),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
@@ -264,9 +288,10 @@ fun CartItemButton() {
 //create a button that says confirm order
 @Composable
 fun ConfirmOrderButton(navController: NavController) {
-    Column(modifier = Modifier
-        .padding(bottom = 32.dp)
-        .padding(horizontal = 16.dp)
+    Column(
+        modifier = Modifier
+            .padding(bottom = 32.dp)
+            .padding(horizontal = 16.dp)
     ) {
         Button(
             modifier = Modifier
@@ -294,9 +319,10 @@ fun ConfirmOrderButton(navController: NavController) {
 //Cart Column
 @Composable
 fun CartElementColumn(navController: NavHostController) {
-    Column(modifier = Modifier
-        .fillMaxSize()
-        .verticalScroll(rememberScrollState())
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .verticalScroll(rememberScrollState())
     ) {
         TotalPrice(navController)
         LazyColumn(
@@ -318,9 +344,10 @@ fun CartElementColumn(navController: NavHostController) {
 
             }
         )
-        Column(modifier = Modifier
-            .padding(bottom = 32.dp)
-            .padding(horizontal = 16.dp)
+        Column(
+            modifier = Modifier
+                .padding(bottom = 32.dp)
+                .padding(horizontal = 16.dp)
         ) {
             Button(
                 modifier = Modifier
@@ -349,8 +376,9 @@ fun CartElementColumn(navController: NavHostController) {
 //Screen
 @Composable
 fun CartScreen(navController: NavHostController) {
-    Column(modifier = Modifier
-        .fillMaxSize()
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
     ) {
         CartElementColumn(navController)
     }
@@ -368,9 +396,11 @@ fun TotalPricePreview() {
 @Preview(showBackground = true)
 @Composable
 fun CartElementPreview() {
-    CartElement(drawable = R.drawable.ash_adidas,
+    CartElement(
+        drawable = R.drawable.ash_adidas,
         text = R.string.ash_adidas_string,
-        price = R.string.temp_price)
+        price = R.string.temp_price
+    )
 }
 
 @Preview(showBackground = true)

@@ -38,9 +38,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import com.example.trainersapp.R
 import com.example.trainersapp.debitcard_models.CreditCardModel
 import com.example.trainersapp.debitcard_models.CreditCardViewModel
@@ -53,7 +50,7 @@ import com.example.trainersapp.ui.theme.App_purple_fade
 import com.example.trainersapp.ui.theme.PoppinsTypography
 
 @Composable
-fun VisaPaymentDetails(navController: NavController, viewModel: CreditCardViewModel) {
+fun VisaPaymentDetails(upPress: () -> Unit, viewModel: CreditCardViewModel) {
 
     val focusHolderNum = FocusRequester()
     val focusExpiration = FocusRequester()
@@ -84,7 +81,7 @@ fun VisaPaymentDetails(navController: NavController, viewModel: CreditCardViewMo
                     contentAlignment = Alignment.Center
                 ) {
                     IconButton(onClick = {
-                        navController.navigateUp()
+                        upPress()
                     }) {
                         Icon(
                             modifier =
@@ -301,14 +298,14 @@ fun VisaPaymentDetails(navController: NavController, viewModel: CreditCardViewMo
 }
 
 
-
 @Composable
-fun VisaPaymentScreen(navController: NavHostController) {
-    Column(modifier = Modifier
-        .fillMaxSize()
-        .verticalScroll(rememberScrollState())
+fun VisaPaymentScreen(upPress: () -> Unit) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .verticalScroll(rememberScrollState())
     ) {
-        VisaPaymentDetails(navController, viewModel = CreditCardViewModel())
+        VisaPaymentDetails(upPress, viewModel = CreditCardViewModel())
     }
 
 }
@@ -317,7 +314,6 @@ fun VisaPaymentScreen(navController: NavHostController) {
 @Preview(showBackground = true)
 @Composable
 fun VisaPaymentScreenPreview() {
-    val navController = rememberNavController()
-    VisaPaymentScreen(navController)
+    VisaPaymentScreen(upPress = {})
 }
 

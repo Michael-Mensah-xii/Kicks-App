@@ -38,9 +38,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import com.example.trainersapp.R
 import com.example.trainersapp.debitcard_models.CreditCardViewModel
 import com.example.trainersapp.debitcard_models.FieldType
@@ -52,7 +49,7 @@ import com.example.trainersapp.ui.theme.App_purple_fade
 import com.example.trainersapp.ui.theme.PoppinsTypography
 
 @Composable
-fun MastercardPaymentDetails(navController: NavController, viewModel: CreditCardViewModel) {
+fun MastercardPaymentDetails(upPress: () -> Unit, viewModel: CreditCardViewModel) {
 
     val focusHolderNum = FocusRequester()
     val focusExpiration = FocusRequester()
@@ -83,7 +80,7 @@ fun MastercardPaymentDetails(navController: NavController, viewModel: CreditCard
                     contentAlignment = Alignment.Center
                 ) {
                     IconButton(onClick = {
-                        navController.navigateUp()
+                        upPress()
                     }) {
                         Icon(
                             modifier =
@@ -303,13 +300,13 @@ fun MastercardPaymentDetails(navController: NavController, viewModel: CreditCard
 
 
 @Composable
-fun MastercardPaymentScreen(navController: NavHostController) {
+fun MastercardPaymentScreen(upPress: () -> Unit) {
     Column(
         modifier = Modifier
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
     ) {
-        MastercardPaymentDetails(navController, viewModel = CreditCardViewModel())
+        MastercardPaymentDetails(upPress, viewModel = CreditCardViewModel())
     }
 
 }
@@ -318,6 +315,5 @@ fun MastercardPaymentScreen(navController: NavHostController) {
 @Preview(showBackground = true)
 @Composable
 fun MastercardPaymentScreenPreview() {
-    val navController = rememberNavController()
-    MastercardPaymentScreen(navController)
+    MastercardPaymentScreen(upPress = {})
 }

@@ -1,8 +1,21 @@
 package com.example.trainersapp.view
 
-import androidx.compose.foundation.*
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.OutlinedButton
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -41,7 +54,8 @@ fun LoadingPage(navController: NavHostController) {
             verticalArrangement = Arrangement.Top,
 
             ) {
-            Image(painter = painterResource(id = R.drawable.sneaker),
+            Image(
+                painter = painterResource(id = R.drawable.sneaker),
                 contentDescription = "sneaker",
                 modifier = Modifier.size(570.dp),
                 contentScale = ContentScale.Crop
@@ -113,8 +127,9 @@ fun LoadingPage(navController: NavHostController) {
             )
 
         }
-        Column(modifier = Modifier
-            .fillMaxWidth()
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
         ) {
             Text(
                 text = "Good shoes take you\nplaces",
@@ -142,9 +157,11 @@ fun LoadingPage(navController: NavHostController) {
                     .fillMaxWidth(),
                 shape = RoundedCornerShape(32.dp),
                 border = BorderStroke(1.dp, App_purple),
-                onClick = { navController.navigate("signUp") {
-                    popUpTo("signUp") { inclusive = true }
-                } }
+                onClick = {
+                    navController.navigate("signUp") {
+                        popUpTo("signUp") { inclusive = true }
+                    }
+                }
             )
             {
                 Text(

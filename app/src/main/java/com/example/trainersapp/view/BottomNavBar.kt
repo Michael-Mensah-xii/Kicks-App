@@ -40,7 +40,7 @@ fun BottomNavigationBar(navController: NavController) {
                 selected = item == selectedItem,
                 onClick = {
 
-                   if (item.icon == R.drawable.home_icon) {
+                    if (item.icon == R.drawable.home_icon) {
                         navController.navigate("home") {
                             popUpTo("home") { inclusive = true }
                         }
