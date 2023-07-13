@@ -20,7 +20,7 @@
 <br>
 
 ## Screenshots
-![image](https://github.com/Michael-Mensah-xii/Kicks-App/assets/95852329/7a8bfcc5-4792-4144-abe6-a9c54e2b2939)
+![image](https://github.com/Michael-Mensah-xii/Kicks-App/assets/95852329/a6a46321-4a42-4e47-b12a-8819438f3f81)
 
 ![image](https://github.com/Michael-Mensah-xii/Kicks-App/assets/95852329/46d32c16-d1ac-4283-9cf9-4a5a537c7eaf)
 
