@@ -84,8 +84,9 @@ fun HomeScreen( onItemClicked: (item: Int) -> Unit
             )
         }
         // Tab row
-        TabRow(selectedTabIndex = pagerState.currentPage,
-            modifier = Modifier.fillMaxWidth(),
+        TabRow(
+            selectedTabIndex = pagerState.currentPage,
+            modifier = Modifier.fillMaxWidth() .padding(horizontal = 16.dp),
             backgroundColor = MaterialTheme.colors.background,
             contentColor = Color.Black,
             indicator = { tabPositions ->
@@ -152,16 +153,15 @@ fun ShoeGrid(onItemClicked: (item: Int) -> Unit) {
     val destinations = ShoeDataSource().loadData()
 
     LazyVerticalGrid(
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp),
         columns = GridCells.Fixed(2),
+        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 16.dp),
         modifier = Modifier
             .fillMaxSize()
-            .padding(top = 16.dp)
-            .padding(horizontal = 8.dp)
     ) {
         itemsIndexed(destinations) { item, destination ->
-            Row(Modifier.padding(8.dp)) {
                 GridItemLayout(destination, onItemClicked = { onItemClicked(item) })
-            }
         }
     }
 }

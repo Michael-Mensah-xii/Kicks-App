@@ -391,18 +391,12 @@ fun ShoeViewPage(
 fun SimilarMatchRow(onItemClicked: (item: Int) -> Unit) {
     val destinations = ShoeDataSource().loadData()
     LazyRow(
-        contentPadding = PaddingValues(0.dp),
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        contentPadding = PaddingValues(horizontal = 16.dp),
         modifier = Modifier
-            .padding(horizontal = 8.dp)
-        ) {
+    ) {
         itemsIndexed(destinations) { item, destination ->
-            Row(
-                Modifier
-                    .padding(horizontal = 8.dp)
-                    .padding(bottom = 8.dp)
-            ) {
-                SimilarMatchLayout(destination, onItemClicked = { onItemClicked(item) })
-            }
+            SimilarMatchLayout(destination, onItemClicked = { onItemClicked(item) })
         }
     }
 

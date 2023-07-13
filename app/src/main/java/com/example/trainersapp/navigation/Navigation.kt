@@ -81,7 +81,9 @@ fun TrainersApp() {
                             navController.navigateUp()
                         }
                     }, onItemClicked = { item ->
-                        navController.navigate(Screen.ShoeViewPage.createRouteWithItem(item))
+                        navController.navigate(Screen.ShoeViewPage.createRouteWithItem(item)){
+                            popUpTo(Screen.HomeScreen.route)
+                        }
                     })
                 }
             }
@@ -93,11 +95,11 @@ fun TrainersApp() {
             composable(route = Screen.PaymentList.route) {
                 PaymentList(openVisaPayment = {
                     navController.navigate("visa_select") {
-                        popUpTo("visa_select") { inclusive = true }
+                        popUpTo("visa_select")
                     }
                 }, openMasterCardPayment = {
                     navController.navigate("mastercard_select") {
-                        popUpTo("mastercard_select") { inclusive = true }
+                        popUpTo("mastercard_select")
                     }
                 }, upPress = { navController.navigateUp() })
             }
