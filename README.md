@@ -1,29 +1,32 @@
-# Kicks-App
-sneaker shopping app based on figma UI
-
-# Installation
-Install Android Studio on any compatible device
+## Kicks-App
+ * An implementation of a Figma design of an app for shopping for sneakers
 
 
 
-# Figma Reference
-##### https://www.figma.com/file/ICEs5o5lqlbYsEgNu4Grg1/SneakerApp?node-id=12%3A304&t=C6ii2Yh2YqnaGUZt-0
+## Installation
+* Install Android Studio on any compatible device
+
+
+## Built with
+* Jetpack Compose
 
 
 
-# Screenshots
-Screenshots of app
-
-<img height="740" src="Screenshots/Screenshot_20221231_212322.png" width="360"/>   <img height="740" src="Screenshots/Screenshot_20221231_212454.png" width="360"/>
-
-<img alt="homescreen" height="740" src="https://user-images.githubusercontent.com/95852329/212492469-ebac98f9-65d7-4613-9533-621aa52953b3.png" width="360"/>  <img alt="shoeviewpg" height="740" src="https://user-images.githubusercontent.com/95852329/212493043-7888f02f-a2f7-4539-bd7c-56e4f9ec0f25.png" width="360"/>
-
-<img height="740" src="Screenshots/Screenshot_20221231_212633.png" width="360"/>   <img height="740" src="Screenshots/Screenshot_20221231_212645.png" width="360"/>
-
-<img alt="visacsel" height="740" src="https://user-images.githubusercontent.com/95852329/212492759-e8bc60f2-d54b-49f4-a4c6-66a90fe5ccd8.png" width="360"/>  <img alt="mastersel" height="740" src="https://user-images.githubusercontent.com/95852329/212492762-1ef95dfe-88d6-4f67-932e-b14ea996ac2c.png" width="360"/>
+## Figma Reference
+![image](https://github.com/Michael-Mensah-xii/Kicks-App/assets/95852329/e2faffbf-fb39-4f79-8a13-dc69a0721d75)
 
 
 
-# App Visual
+<br>
+
+## Screenshots
+![image](https://github.com/Michael-Mensah-xii/Kicks-App/assets/95852329/7a8bfcc5-4792-4144-abe6-a9c54e2b2939)
+
+![image](https://github.com/Michael-Mensah-xii/Kicks-App/assets/95852329/46d32c16-d1ac-4283-9cf9-4a5a537c7eaf)
+
+
+
+## App Visual
+https://github.com/Michael-Mensah-xii/Kicks-App/assets/95852329/8dbbfe63-730c-48d0-822b-9f873f354f42
 
 
